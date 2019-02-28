@@ -12,7 +12,7 @@
     <artifactId>bibliotheque</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>bibliotheque</name>
-    <description>Projet Bibliothèque dans le cadre de la matière "Approche par les patrons"</description>
+    <description>Projet "Bibliothèque" dans le cadre de la matière "Approche par les patrons"</description>
 
     <properties>
         <java.version>1.8</java.version>

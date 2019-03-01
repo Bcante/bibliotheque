@@ -1,4 +1,4 @@
-package bibliotheque.Model;
+package bibliotheque.model;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;

@@ -1,5 +1,6 @@
-package bibliotheque.Model;
+package bibliotheque.model;
 
+import bibliotheque.model.enumeration.Etat;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -13,8 +14,8 @@ public class Exemplaire {
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String id;
 
-    @NotNull
-    private int etat; // 0 : neuf, 1 : usée, 2 : très usé
+    @Enumerated(EnumType.STRING)
+    private Etat etat;
 
     @ManyToOne
     @JoinColumn(name = "id_oeuvre")
@@ -23,7 +24,7 @@ public class Exemplaire {
     public Exemplaire() {
     }
 
-    public Exemplaire(int etat) {
+    public Exemplaire(Etat etat) {
         this.etat = etat;
     }
 
@@ -35,11 +36,19 @@ public class Exemplaire {
         this.id = id;
     }
 
-    public int getEtat() {
+    public Etat getEtat() {
         return etat;
     }
 
-    public void setEtat(int etat) {
+    public void setEtat(Etat etat) {
         this.etat = etat;
+    }
+
+    public Oeuvre getOeuvre() {
+        return oeuvre;
+    }
+
+    public void setOeuvre(Oeuvre oeuvre) {
+        this.oeuvre = oeuvre;
     }
 }

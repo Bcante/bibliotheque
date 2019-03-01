@@ -1,5 +1,7 @@
-package bibliotheque.Model;
+package bibliotheque.model;
 
+import bibliotheque.model.enumeration.StatutReservation;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -25,13 +27,17 @@ public class Reservation {
     @JoinColumn(name = "id")
     private Usager usager;
 
+    @Enumerated(EnumType.STRING)
+    private StatutReservation statut;
+
     public Reservation() {
     }
 
-    public Reservation(Oeuvre oeuvre, Usager usager, LocalDate datereservation) {
+    public Reservation(Oeuvre oeuvre, Usager usager) {
         this.oeuvre = oeuvre;
         this.usager = usager;
-        this.datereservation = datereservation;
+        this.datereservation = LocalDate.now();
+        this.statut = StatutReservation.EN_COURS;
     }
 
     public String getId() {
@@ -64,5 +70,13 @@ public class Reservation {
 
     public void setUsager(Usager usager) {
         this.usager = usager;
+    }
+
+    public StatutReservation getStatut() {
+        return statut;
+    }
+
+    public void setStatut(StatutReservation status) {
+        this.statut = status;
     }
 }

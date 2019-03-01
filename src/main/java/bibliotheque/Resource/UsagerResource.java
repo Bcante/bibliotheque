@@ -1,6 +1,6 @@
-package bibliotheque.Resource;
+package bibliotheque.resource;
 
-import bibliotheque.Model.Usager;
+import bibliotheque.model.Usager;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 

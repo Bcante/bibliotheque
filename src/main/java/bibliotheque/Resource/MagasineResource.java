@@ -1,6 +1,6 @@
-package bibliotheque.Resource;
+package bibliotheque.resource;
 
-import bibliotheque.Model.Magasine;
+import bibliotheque.model.Magasine;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 

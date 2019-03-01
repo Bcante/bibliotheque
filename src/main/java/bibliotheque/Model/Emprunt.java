@@ -1,5 +1,7 @@
-package bibliotheque.Model;
+package bibliotheque.model;
 
+import bibliotheque.model.enumeration.StatutEmprunt;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -25,13 +27,19 @@ public class Emprunt {
     @JoinColumn(name = "id")
     private Usager usager;
 
+    @Enumerated(EnumType.STRING)
+    private StatutEmprunt statut; // 0 : en cours, 1 : termine
+
     public Emprunt() {
     }
 
-    public Emprunt(Usager usager, Exemplaire exemplaire, LocalDate daterendu) {
+    public Emprunt(Usager usager, Exemplaire exemplaire) {
         this.usager = usager;
         this.exemplaire = exemplaire;
-        this.daterendu = daterendu;
+        this.statut = StatutEmprunt.EN_COURS;
+
+        int jour = (exemplaire.getOeuvre() instanceof Livre) ? Livre.DUREE_EMPRUNT : Magasine.DUREE_EMPRUNT;
+        this.daterendu = LocalDate.now().plusDays(jour);
     }
 
     public String getId() {
@@ -64,5 +72,13 @@ public class Emprunt {
 
     public void setUsager(Usager usager) {
         this.usager = usager;
+    }
+
+    public StatutEmprunt getStatut() {
+        return statut;
+    }
+
+    public void setStatut(StatutEmprunt statut) {
+        this.statut = statut;
     }
 }

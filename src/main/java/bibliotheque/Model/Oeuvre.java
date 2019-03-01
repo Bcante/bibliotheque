@@ -1,11 +1,13 @@
-package bibliotheque.Model;
+package bibliotheque.model;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 @Entity
 public class Oeuvre {
@@ -20,6 +22,9 @@ public class Oeuvre {
 
     @NotNull
     private String ISBN;
+
+    @ColumnDefault("CURRENT_DATE()")
+    private LocalDate parution;
 
     public Oeuvre() {
     }
@@ -51,5 +56,13 @@ public class Oeuvre {
 
     public void setISBN(String ISBN) {
         this.ISBN = ISBN;
+    }
+
+    public LocalDate getParution() {
+        return parution;
+    }
+
+    public void setParution(LocalDate parution) {
+        this.parution = parution;
     }
 }

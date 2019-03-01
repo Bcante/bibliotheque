@@ -1,4 +1,4 @@
-package bibliotheque.Model;
+package bibliotheque.model;
 
 import org.hibernate.annotations.GenericGenerator;
 

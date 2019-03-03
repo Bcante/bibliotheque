@@ -13,7 +13,7 @@ public class Usager {
     @Id
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
-    private String id;
+    private String idusager;
 
     @NotNull
     private String nom;
@@ -24,21 +24,25 @@ public class Usager {
     @NotNull
     private String adresse;
 
+    @NotNull
+    private String mail;
+
     public Usager() {
     }
 
-    public Usager(String nom, String prenom, String adresse) {
+    public Usager(String nom, String prenom, String adresse, String mail) {
         this.nom = nom;
         this.prenom = prenom;
         this.adresse = adresse;
+        this.mail = mail;
     }
 
-    public String getId() {
-        return id;
+    public String getIdusager() {
+        return idusager;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setIdusager(String idusager) {
+        this.idusager = idusager;
     }
 
     public String getNom() {
@@ -63,5 +67,13 @@ public class Usager {
 
     public void setAdresse(String adresse) {
         this.adresse = adresse;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 }

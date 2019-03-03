@@ -13,7 +13,7 @@ public class Auteur {
     @Id
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
-    private String id;
+    private String idauteur;
 
     @NotNull
     private String nom;
@@ -29,12 +29,12 @@ public class Auteur {
         this.prenom = prenom;
     }
 
-    public String getId() {
-        return this.id;
+    public String getIdauteur() {
+        return this.idauteur;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setIdauteur(String idauteur) {
+        this.idauteur = idauteur;
     }
 
     public String getNom() {

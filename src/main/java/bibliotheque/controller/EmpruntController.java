@@ -1,6 +1,8 @@
 package bibliotheque.controller;
 
 import bibliotheque.model.*;
+import bibliotheque.model.enumeration.StatutEmprunt;
+import bibliotheque.model.enumeration.StatutReservation;
 import bibliotheque.resource.EmpruntResource;
 import bibliotheque.resource.ExemplaireResource;
 import bibliotheque.resource.ReservationResource;
@@ -65,9 +67,9 @@ public class EmpruntController {
         Emprunt emprunt = new Emprunt(usager.get(), exemplaire.get());
         empruntResource.save(emprunt);
         // on passe la reservation correpondante à l'emprunt à "terminée"
-        Reservation reservation = reservationResource.getReservationByUsagerAndOeuvreAndStatus(usager.get(), exemplaire.get().getOeuvre(), 0);
+        Reservation reservation = reservationResource.getReservationByUsagerAndOeuvreAndStatut(usager.get(), exemplaire.get().getOeuvre(), StatutReservation.EN_COURS);
         if(reservation != null) {
-            reservation.setStatus(1);
+            reservation.setStatut(StatutReservation.EN_COURS);
             reservationResource.save(reservation);
         }
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -95,11 +97,11 @@ public class EmpruntController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        Emprunt emprunt = empruntResource.getEmpruntByUsagerAndExemplaireAndStatus(usager.get(), exemplaire.get(), 0);
+        Emprunt emprunt = empruntResource.getEmpruntByUsagerAndExemplaireAndStatut(usager.get(), exemplaire.get(), StatutEmprunt.EN_COURS);
         if(emprunt == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        emprunt.setStatus(1);
+        emprunt.setStatut(StatutEmprunt.TERMINE);
         empruntResource.save(emprunt);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

@@ -1,21 +1,25 @@
 package bibliotheque.model;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
+@Entity
 public class Livre extends Oeuvre {
 
     public final static int DUREE_EMPRUNT = 30;
 
+    @OneToOne
+    @PrimaryKeyJoinColumn
+    @JoinColumn(name = "idoeuvre")
+    private Oeuvre oeuvre;
+
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "idauteur")
     private Auteur auteur;
 
     public Livre() {
     }
 
-    public Livre(String titre, String ISBN, Auteur idauteur) {
-        super(titre, ISBN);
+    public Livre(Auteur idauteur) {
         this.auteur = idauteur;
     }
 

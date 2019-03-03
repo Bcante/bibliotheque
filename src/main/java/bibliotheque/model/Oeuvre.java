@@ -1,21 +1,19 @@
 package bibliotheque.model;
 
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Oeuvre {
 
     @Id
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
-    private String id;
+    private String idoeuvre;
 
     @NotNull
     private String titre;
@@ -23,23 +21,30 @@ public class Oeuvre {
     @NotNull
     private String ISBN;
 
-    @ColumnDefault("CURRENT_DATE()")
+    @NotNull
     private LocalDate parution;
+
+    /*@OneToOne(mappedBy = "oeuvre")
+    private Livre livre;
+
+    @OneToOne(mappedBy = "oeuvre")
+    private Magasine magasine;*/
 
     public Oeuvre() {
     }
 
-    public Oeuvre(String titre, String ISBN) {
+    public Oeuvre(String titre, String ISBN, LocalDate parution) {
         this.titre = titre;
         this.ISBN = ISBN;
+        this.parution = parution;
     }
 
-    public String getId() {
-        return id;
+    public String getIdlivre() {
+        return idoeuvre;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setIdlivre(String idlivre) {
+        this.idoeuvre = idlivre;
     }
 
     public String getTitre() {
@@ -58,6 +63,14 @@ public class Oeuvre {
         this.ISBN = ISBN;
     }
 
+    public String getIdoeuvre() {
+        return idoeuvre;
+    }
+
+    public void setIdoeuvre(String idoeuvre) {
+        this.idoeuvre = idoeuvre;
+    }
+
     public LocalDate getParution() {
         return parution;
     }
@@ -65,4 +78,20 @@ public class Oeuvre {
     public void setParution(LocalDate parution) {
         this.parution = parution;
     }
+
+    /*public Livre getLivre() {
+        return livre;
+    }
+
+    public void setLivre(Livre livre) {
+        this.livre = livre;
+    }
+
+    public Magasine getMagasine() {
+        return magasine;
+    }
+
+    public void setMagasine(Magasine magasine) {
+        this.magasine = magasine;
+    }*/
 }

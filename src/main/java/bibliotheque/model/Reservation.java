@@ -1,7 +1,6 @@
 package bibliotheque.model;
 
 import bibliotheque.model.enumeration.StatutReservation;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -14,17 +13,17 @@ public class Reservation {
     @Id
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
-    private String id;
+    private String idreservation;
 
     @NotNull
     private LocalDate datereservation;
 
     @OneToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "idoeuvre")
     private Oeuvre oeuvre;
 
     @OneToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "idusager")
     private Usager usager;
 
     @Enumerated(EnumType.STRING)
@@ -40,12 +39,12 @@ public class Reservation {
         this.statut = StatutReservation.EN_COURS;
     }
 
-    public String getId() {
-        return id;
+    public String getIdreservation() {
+        return idreservation;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setIdreservation(String idreservation) {
+        this.idreservation = idreservation;
     }
 
     public LocalDate getDatereservation() {

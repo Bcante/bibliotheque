@@ -4,10 +4,9 @@ public enum Type {
     SPORT("sport"),
     AUTOMOBILE("automobile"),
     PEOPLE("people"),
-    ASTRONOMIE("astronomie"),
+    CULTURE("culture"),
     CUISINE("cuisine"),
-    ECONOMIE("économie"),
-    POLITIQUE("politique");
+    ACTUALITE("actualite");
 
     private String type;
 

@@ -1,7 +1,6 @@
 package bibliotheque.model;
 
 import bibliotheque.model.enumeration.StatutEmprunt;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -14,17 +13,17 @@ public class Emprunt {
     @Id
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
-    private String id;
+    private String idemprunt;
 
     @NotNull
     private LocalDate daterendu;
 
     @OneToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "idexemplaire")
     private Exemplaire exemplaire;
 
     @OneToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "idusager")
     private Usager usager;
 
     @Enumerated(EnumType.STRING)
@@ -38,16 +37,17 @@ public class Emprunt {
         this.exemplaire = exemplaire;
         this.statut = StatutEmprunt.EN_COURS;
 
+        // int jour = (exemplaire.getOeuvre().getLivre() == null) ? Magasine.DUREE_EMPRUNT : Livre.DUREE_EMPRUNT;
         int jour = (exemplaire.getOeuvre() instanceof Livre) ? Livre.DUREE_EMPRUNT : Magasine.DUREE_EMPRUNT;
         this.daterendu = LocalDate.now().plusDays(jour);
     }
 
-    public String getId() {
-        return id;
+    public String getIdemprunt() {
+        return idemprunt;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setIdemprunt(String idemprunt) {
+        this.idemprunt = idemprunt;
     }
 
     public LocalDate getDaterendu() {

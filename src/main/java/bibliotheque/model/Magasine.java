@@ -2,14 +2,17 @@ package bibliotheque.model;
 
 import bibliotheque.model.enumeration.Type;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 
 @Entity
 public class Magasine extends Oeuvre {
 
     public final static int DUREE_EMPRUNT = 15;
+
+    @OneToOne
+    @PrimaryKeyJoinColumn
+    @JoinColumn(name = "idoeuvre")
+    private Oeuvre oeuvre;
 
     @Enumerated(EnumType.STRING)
     private Type type;
@@ -17,8 +20,7 @@ public class Magasine extends Oeuvre {
     public Magasine() {
     }
 
-    public Magasine(String titre, String ISBN, Type type) {
-        super(titre, ISBN);
+    public Magasine(Type type) {
         this.type = type;
     }
 
@@ -29,4 +31,5 @@ public class Magasine extends Oeuvre {
     public void setType(Type type) {
         this.type = type;
     }
+
 }

@@ -4,7 +4,6 @@ import bibliotheque.model.enumeration.Etat;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Entity
 public class Exemplaire {
@@ -12,13 +11,13 @@ public class Exemplaire {
     @Id
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
-    private String id;
+    private String idexemplaire;
 
     @Enumerated(EnumType.STRING)
     private Etat etat;
 
     @ManyToOne
-    @JoinColumn(name = "id_oeuvre")
+    @JoinColumn(name = "idoeuvre")
     private Oeuvre oeuvre;
 
     public Exemplaire() {
@@ -28,12 +27,12 @@ public class Exemplaire {
         this.etat = etat;
     }
 
-    public String getId() {
-        return id;
+    public String getIdexemplaire() {
+        return idexemplaire;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setIdexemplaire(String idexemplaire) {
+        this.idexemplaire = idexemplaire;
     }
 
     public Etat getEtat() {

@@ -3,6 +3,7 @@ package bibliotheque.controller;
 import bibliotheque.model.Oeuvre;
 import bibliotheque.model.Reservation;
 import bibliotheque.model.Usager;
+import bibliotheque.model.enumeration.StatutReservation;
 import bibliotheque.resource.OeuvreResource;
 import bibliotheque.resource.ReservationResource;
 import bibliotheque.resource.UsagerResource;
@@ -63,7 +64,7 @@ public class ReservationController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         // vérification qu'une réservation n'existe pas deja pour cette oeuvre pour cet usager
-        Reservation reservationExists = reservationResource.getReservationByUsagerAndOeuvreAndStatus(usager.get(), oeuvre.get(), 0);
+        Reservation reservationExists = reservationResource.getReservationByUsagerAndOeuvreAndStatut(usager.get(), oeuvre.get(), StatutReservation.EN_COURS);
         if(reservationExists != null) {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
@@ -94,11 +95,11 @@ public class ReservationController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        Reservation reservation = reservationResource.getReservationByUsagerAndOeuvreAndStatus(usager.get(), oeuvre.get(), 0);
+        Reservation reservation = reservationResource.getReservationByUsagerAndOeuvreAndStatut(usager.get(), oeuvre.get(), StatutReservation.EN_COURS);
         if(reservation == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        reservation.setStatus(2);
+        reservation.setStatut(StatutReservation.ANNULEE);
         reservationResource.save(reservation);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

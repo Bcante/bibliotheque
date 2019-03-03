@@ -15,4 +15,7 @@ public interface EmpruntResource extends JpaRepository<Emprunt, String> {
                                                      @RequestParam Exemplaire exemplaire,
                                                      @RequestParam StatutEmprunt statut);
 
+    Emprunt getEmpruntByExemplaireAndStatut(@RequestParam Exemplaire exemplaire,
+                                            @RequestParam StatutEmprunt statut);
+
 }

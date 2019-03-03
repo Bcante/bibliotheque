@@ -3,12 +3,9 @@ package bibliotheque.controller;
 import bibliotheque.model.*;
 import bibliotheque.model.enumeration.StatutEmprunt;
 import bibliotheque.model.enumeration.StatutReservation;
-import bibliotheque.resource.EmpruntResource;
-import bibliotheque.resource.ExemplaireResource;
-import bibliotheque.resource.ReservationResource;
-import bibliotheque.resource.UsagerResource;
+import bibliotheque.resource.*;
 import bibliotheque.tools.Tools;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +24,13 @@ public class EmpruntController {
     private UsagerResource usagerResource;
     private ExemplaireResource exemplaireResource;
     private ReservationResource reservationResource;
+
+    public EmpruntController(ReservationResource reservationResource, EmpruntResource empruntResource, UsagerResource usagerResource, ExemplaireResource exemplaireResource) {
+        this.reservationResource = reservationResource;
+        this.empruntResource = empruntResource;
+        this.usagerResource = usagerResource;
+        this.exemplaireResource = exemplaireResource;
+    }
 
     @GetMapping(value = "/")
     public ModelAndView findAll() {
@@ -55,15 +59,21 @@ public class EmpruntController {
         if(body == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        ObjectMapper om = Tools.createObjectMapper();
-        String idexemplaire = om.readTree("idexemplaire").textValue();
-        String idusager = om.readTree("idusager").textValue();
+        JsonNode node = Tools.createObjectMapper().readTree(body);
+        String idexemplaire = node.get("idexemplaire").asText();
+        String idusager = node.get("idusager").asText();
 
         Optional<Exemplaire> exemplaire = exemplaireResource.findById(idexemplaire);
         Optional<Usager> usager = usagerResource.findById(idusager);
         if(!exemplaire.isPresent() || !usager.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+
+        Emprunt checkExemplaireDispo = empruntResource.getEmpruntByExemplaireAndStatut(exemplaire.get(), StatutEmprunt.EN_COURS);
+        if(checkExemplaireDispo != null) {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+
         Emprunt emprunt = new Emprunt(usager.get(), exemplaire.get());
         empruntResource.save(emprunt);
         // on passe la reservation correpondante à l'emprunt à "terminée"
@@ -87,9 +97,9 @@ public class EmpruntController {
         if(body == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        ObjectMapper om = Tools.createObjectMapper();
-        String titre = om.readTree("titre").textValue();
-        String idusager = om.readTree("idusager").textValue();
+        JsonNode node = Tools.createObjectMapper().readTree(body);
+        String titre = node.get("idexemplaire").asText();
+        String idusager = node.get("idusager").asText();
 
         Optional<Exemplaire> exemplaire = exemplaireResource.findById(titre);
         Optional<Usager> usager = usagerResource.findById(idusager);

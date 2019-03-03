@@ -8,7 +8,7 @@ import bibliotheque.resource.OeuvreResource;
 import bibliotheque.resource.ReservationResource;
 import bibliotheque.resource.UsagerResource;
 import bibliotheque.tools.Tools;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,11 +23,17 @@ import java.util.Optional;
 @RequestMapping("/reservations")
 public class ReservationController {
 
-    private ReservationResource reservationResource;
+    private final ReservationResource reservationResource;
     private OeuvreResource oeuvreResource;
     private UsagerResource usagerResource;
 
-    @GetMapping(value = "/")
+    public ReservationController(ReservationResource reservationResource, OeuvreResource oeuvreResource, UsagerResource usagerResource) {
+        this.reservationResource = reservationResource;
+        this.oeuvreResource = oeuvreResource;
+        this.usagerResource = usagerResource;
+    }
+
+    @GetMapping
     public ModelAndView findAll() {
         List<Reservation> reservations = reservationResource.findAll();
         return null;
@@ -54,9 +60,9 @@ public class ReservationController {
         if(body == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        ObjectMapper om = Tools.createObjectMapper();
-        String titre = om.readTree("titre").textValue();
-        String idusager = om.readTree("idusager").textValue();
+        JsonNode node = Tools.createObjectMapper().readTree(body);
+        String titre = node.get("titre").asText();
+        String idusager = node.get("idusager").asText();
 
         Optional<Oeuvre> oeuvre = Optional.ofNullable(oeuvreResource.findByTitre(titre));
         Optional<Usager> usager = usagerResource.findById(idusager);
@@ -85,9 +91,9 @@ public class ReservationController {
         if(body == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        ObjectMapper om = Tools.createObjectMapper();
-        String titre = om.readTree("titre").textValue();
-        String idusager = om.readTree("idusager").textValue();
+        JsonNode node = Tools.createObjectMapper().readTree(body);
+        String titre = node.get("titre").asText();
+        String idusager = node.get("idusager").asText();
 
         Optional<Oeuvre> oeuvre = Optional.ofNullable(oeuvreResource.findByTitre(titre));
         Optional<Usager> usager = usagerResource.findById(idusager);

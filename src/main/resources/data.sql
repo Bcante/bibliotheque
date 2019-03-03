@@ -14,7 +14,7 @@ INSERT INTO usager (idusager, prenom, nom, adresse, mail) VALUES ('dc682f8b-8b91
 INSERT INTO usager (idusager, prenom, nom, adresse, mail) VALUES ('eca2e00b-5132-445a-b5ad-6633b265a197', 'Claire', 'Pouliotte', '125 rue du Palais', 'cpouilotte@neuf.fr')
 INSERT INTO usager (idusager, prenom, nom, adresse, mail) VALUES ('3d46e180-ff9b-4fce-913d-2ffde36264c7', 'Fabien', 'Jacques', '76 rue Beauvau', 'fabien.jacques@orange.fr')
 INSERT INTO usager (idusager, prenom, nom, adresse, mail) VALUES ('e99dbf0d-c68f-4832-af21-130369a9bda2', 'Cloé', 'Mailhot', '112 chemin Challet', 'cloe.mailhot@gmail.com')
-INSERT INTO usager (idusager, prenom, nom, adresse, mail) VALUES('ee4a55f7-01f5-4da6-8601-66bd7600fb78', 'Léa', 'Chavet', '67 rue de Geneve', 'lea.chavet@wanadoo.com')
+INSERT INTO usager (idusager, prenom, nom, adresse, mail) VALUES ('ee4a55f7-01f5-4da6-8601-66bd7600fb78', 'Léa', 'Chavet', '67 rue de Geneve', 'lea.chavet@wanadoo.com')
 
 INSERT INTO auteur (idauteur, prenom, nom) VALUES ('bd4c5f42-f6a1-473a-9736-fc6bb7b97f41', 'Victor', 'Hugo')
 INSERT INTO auteur (idauteur, prenom, nom) VALUES ('2f706cbf-7c7d-4517-90c7-944923909d9c', 'Antoine', 'de Saint-Exupéry')

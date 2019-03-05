@@ -20,7 +20,8 @@ public class Magasine extends Oeuvre {
     public Magasine() {
     }
 
-    public Magasine(Type type) {
+    public Magasine(Oeuvre oeuvre, Type type) {
+        this.oeuvre = oeuvre;
         this.type = type;
     }
 

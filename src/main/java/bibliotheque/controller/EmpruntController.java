@@ -6,6 +6,7 @@ import bibliotheque.model.enumeration.StatutReservation;
 import bibliotheque.resource.*;
 import bibliotheque.tools.Tools;
 import com.fasterxml.jackson.databind.JsonNode;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ public class EmpruntController {
     private ExemplaireResource exemplaireResource;
     private ReservationResource reservationResource;
 
+    @Autowired
     public EmpruntController(ReservationResource reservationResource, EmpruntResource empruntResource, UsagerResource usagerResource, ExemplaireResource exemplaireResource) {
         this.reservationResource = reservationResource;
         this.empruntResource = empruntResource;
@@ -98,10 +100,10 @@ public class EmpruntController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         JsonNode node = Tools.createObjectMapper().readTree(body);
-        String titre = node.get("idexemplaire").asText();
+        String idexemplaire = node.get("idexemplaire").asText();
         String idusager = node.get("idusager").asText();
 
-        Optional<Exemplaire> exemplaire = exemplaireResource.findById(titre);
+        Optional<Exemplaire> exemplaire = exemplaireResource.findById(idexemplaire);
         Optional<Usager> usager = usagerResource.findById(idusager);
         if(!exemplaire.isPresent() || !usager.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -19,8 +19,13 @@ public class Livre extends Oeuvre {
     public Livre() {
     }
 
-    public Livre(Auteur idauteur) {
-        this.auteur = idauteur;
+    public Livre(Auteur auteur) {
+        this.auteur = auteur;
+    }
+
+    public Livre(Oeuvre oeuvre, Auteur auteur) {
+        this.oeuvre = oeuvre;
+        this.auteur = auteur;
     }
 
     public Auteur getAuteur() {

@@ -3,7 +3,6 @@ package bibliotheque.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
@@ -15,13 +14,11 @@ public class Oeuvre {
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String idoeuvre;
 
-    @NotNull
     private String titre;
 
-    @NotNull
+    @Column(unique = true)
     private String ISBN;
 
-    @NotNull
     private LocalDate parution;
 
     /*@OneToOne(mappedBy = "oeuvre")

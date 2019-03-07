@@ -66,7 +66,7 @@ public class ReservationController {
 
         Optional<Oeuvre> oeuvre = Optional.ofNullable(oeuvreResource.findByTitre(titre));
         Optional<Usager> usager = usagerResource.findById(idusager);
-        if(!oeuvre.isPresent() || !usager.isPresent()) {
+        if(!oeuvre.isPresent() || !usager.isPresent() || !usager.get().getActif()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         // vérification qu'une réservation n'existe pas deja pour cette oeuvre pour cet usager

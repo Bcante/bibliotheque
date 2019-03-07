@@ -68,7 +68,7 @@ public class EmpruntController {
 
         Optional<Exemplaire> exemplaire = exemplaireResource.findById(idexemplaire);
         Optional<Usager> usager = usagerResource.findById(idusager);
-        if(!exemplaire.isPresent() || !usager.isPresent()) {
+        if(!exemplaire.isPresent() || !usager.isPresent() || !usager.get().getActif()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 

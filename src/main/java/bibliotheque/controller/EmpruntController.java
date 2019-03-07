@@ -79,6 +79,10 @@ public class EmpruntController {
 
         Emprunt emprunt = new Emprunt(usager.get(), exemplaire.get());
         empruntResource.save(emprunt);
+
+        exemplaire.get().setDisponible(false);
+        exemplaireResource.save(exemplaire.get());
+
         // on passe la reservation correpondante à l'emprunt à "terminée"
         Reservation reservation = reservationResource.getReservationByUsagerAndOeuvreAndStatut(usager.get(), exemplaire.get().getOeuvre(), StatutReservation.EN_COURS);
         if(reservation != null) {
@@ -86,6 +90,38 @@ public class EmpruntController {
             reservationResource.save(reservation);
         }
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    /*
+    {
+        "idusager":"XXXX",
+        "idexemplaire":"YYYY"
+    }
+     */
+    @PutMapping(value = "/rendre")
+    public ResponseEntity<?> rendreEmprunt(HttpEntity<String> infoEmprunt) throws IOException {
+        String body = infoEmprunt.getBody();
+        if(body == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        JsonNode node = Tools.createObjectMapper().readTree(body);
+        String idexemplaire = node.get("idexemplaire").asText();
+        String idusager = node.get("idusager").asText();
+
+        Optional<Exemplaire> exemplaire = exemplaireResource.findById(idexemplaire);
+        Optional<Usager> usager = usagerResource.findById(idusager);
+        if(!exemplaire.isPresent() || !usager.isPresent() || !usager.get().getActif()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        exemplaire.get().setDisponible(true);
+        exemplaireResource.save(exemplaire.get());
+
+        Emprunt emprunt = empruntResource.getEmpruntByUsagerAndExemplaireAndStatut(usager.get(), exemplaire.get(), StatutEmprunt.EN_COURS);
+        emprunt.setStatut(StatutEmprunt.TERMINE);
+        empruntResource.save(emprunt);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /*

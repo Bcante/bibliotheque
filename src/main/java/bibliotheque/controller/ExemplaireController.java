@@ -43,6 +43,16 @@ public class ExemplaireController {
         return new ResponseEntity<>(exemplaire.get(), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/{idoeuvre}/disponibles")
+    public ResponseEntity<?> getExemplairesDisponibles(@PathVariable("idoeuvre") String idoeuvre) {
+        Optional<Oeuvre> oeuvre = oeuvreResource.findById(idoeuvre);
+        if(!oeuvre.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        List<Exemplaire> exemplaires = exemplaireResource.getExemplairesByDisponibleTrueAndOeuvre(oeuvre.get());
+        return new ResponseEntity<>(exemplaires, HttpStatus.OK);
+    }
+
     /*
     {
         "titre" : "XXXX",

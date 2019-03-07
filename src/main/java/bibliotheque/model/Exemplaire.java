@@ -1,6 +1,7 @@
 package bibliotheque.model;
 
 import bibliotheque.model.enumeration.Etat;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -20,12 +21,16 @@ public class Exemplaire {
     @JoinColumn(name = "idoeuvre")
     private Oeuvre oeuvre;
 
+    @ColumnDefault("true")
+    private boolean disponible;
+
     public Exemplaire() {
     }
 
     public Exemplaire(Etat etat, Oeuvre oeuvre) {
         this.oeuvre = oeuvre;
         this.etat = etat;
+        this.disponible = true;
     }
 
     public String getIdexemplaire() {
@@ -50,5 +55,13 @@ public class Exemplaire {
 
     public void setOeuvre(Oeuvre oeuvre) {
         this.oeuvre = oeuvre;
+    }
+
+    public boolean getDisponible() {
+        return disponible;
+    }
+
+    public void setDisponible(boolean disponible) {
+        this.disponible = disponible;
     }
 }

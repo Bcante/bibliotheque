@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -25,6 +26,21 @@ public class ExemplaireController {
     public ExemplaireController(ExemplaireResource exemplaireResource, OeuvreResource oeuvreResource) {
         this.exemplaireResource = exemplaireResource;
         this.oeuvreResource = oeuvreResource;
+    }
+
+    @GetMapping(value = "/")
+    public ResponseEntity<?> getAllExemplaires() {
+        List<Exemplaire> exemplaires = exemplaireResource.findAll();
+        return new ResponseEntity<>(exemplaires, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<?> getOneExemplaire(@PathVariable("id") String idexemplaire) {
+        Optional<Exemplaire> exemplaire = exemplaireResource.findById(idexemplaire);
+        if(!exemplaire.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(exemplaire.get(), HttpStatus.OK);
     }
 
     /*

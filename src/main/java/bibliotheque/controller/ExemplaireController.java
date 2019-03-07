@@ -10,9 +10,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -53,6 +51,16 @@ public class ExemplaireController {
         Exemplaire exemplaire = new Exemplaire(Etat.valueOf(etat), oeuvre.get());
         exemplaireResource.save(exemplaire);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<?> deleteExemplaire(@PathVariable("id") String idexemplaire) {
+        Optional<Exemplaire> exemplaire = this.exemplaireResource.findById(idexemplaire);
+        if(!exemplaire.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        exemplaireResource.delete(exemplaire.get());
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }

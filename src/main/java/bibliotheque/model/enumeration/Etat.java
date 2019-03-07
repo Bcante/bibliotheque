@@ -4,8 +4,7 @@ public enum Etat {
     NEUF("neuf"),
     BON("bon"),
     USE("usé"),
-    TRES_USE("très usé"),
-    DETRUIT("detruit");
+    TRES_USE("très usé");
 
     private String etat;
 

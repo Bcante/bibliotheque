@@ -1,6 +1,7 @@
 package bibliotheque.controller;
 
 import bibliotheque.model.*;
+import bibliotheque.model.enumeration.Etat;
 import bibliotheque.model.enumeration.StatutEmprunt;
 import bibliotheque.model.enumeration.StatutReservation;
 import bibliotheque.resource.*;

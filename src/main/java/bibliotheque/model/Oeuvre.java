@@ -1,5 +1,6 @@
 package bibliotheque.model;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -21,11 +22,8 @@ public class Oeuvre {
 
     private LocalDate parution;
 
-    /*@OneToOne(mappedBy = "oeuvre")
-    private Livre livre;
-
-    @OneToOne(mappedBy = "oeuvre")
-    private Magasine magasine;*/
+    @ColumnDefault(value = "true")
+    private boolean disponible;
 
     public Oeuvre() {
     }
@@ -34,14 +32,7 @@ public class Oeuvre {
         this.titre = titre;
         this.ISBN = ISBN;
         this.parution = parution;
-    }
-
-    public String getIdlivre() {
-        return idoeuvre;
-    }
-
-    public void setIdlivre(String idlivre) {
-        this.idoeuvre = idlivre;
+        this.disponible = true;
     }
 
     public String getTitre() {
@@ -76,19 +67,12 @@ public class Oeuvre {
         this.parution = parution;
     }
 
-    /*public Livre getLivre() {
-        return livre;
+    public boolean getDisponible() {
+        return disponible;
     }
 
-    public void setLivre(Livre livre) {
-        this.livre = livre;
+    public void setDisponible(boolean disponible) {
+        this.disponible = disponible;
     }
 
-    public Magasine getMagasine() {
-        return magasine;
-    }
-
-    public void setMagasine(Magasine magasine) {
-        this.magasine = magasine;
-    }*/
 }

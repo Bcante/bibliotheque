@@ -40,7 +40,7 @@ public class ReservationController {
     }
 
     @GetMapping(value = "/{id}")
-    public ModelAndView findOneReservationById(@RequestParam("id") String id) {
+    public ModelAndView findOneReservationById(@PathVariable("id") String id) {
         if(!reservationResource.existsById(id)) {
             return null;
         }

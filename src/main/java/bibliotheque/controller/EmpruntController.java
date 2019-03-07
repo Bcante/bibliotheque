@@ -41,7 +41,7 @@ public class EmpruntController {
     }
 
     @GetMapping(value = "/{id}")
-    public ModelAndView findOneEmpruntById(@RequestParam("id") String id) {
+    public ModelAndView findOneEmpruntById(@PathVariable("id") String id) {
         if(!empruntResource.existsById(id)) {
             return null;
         }

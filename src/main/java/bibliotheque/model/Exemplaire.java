@@ -23,7 +23,8 @@ public class Exemplaire {
     public Exemplaire() {
     }
 
-    public Exemplaire(Etat etat) {
+    public Exemplaire(Etat etat, Oeuvre oeuvre) {
+        this.oeuvre = oeuvre;
         this.etat = etat;
     }
 

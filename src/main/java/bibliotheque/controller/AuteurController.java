@@ -4,10 +4,9 @@ import bibliotheque.model.Auteur;
 import bibliotheque.resource.AuteurResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/auteurs")
@@ -17,6 +16,19 @@ public class AuteurController {
 
     public AuteurController(AuteurResource auteurResource) {
         this.auteurResource = auteurResource;
+    }
+
+    @GetMapping(value = "/")
+    public ResponseEntity<?> findAll() {
+        List<Auteur> auteurs = this.auteurResource.findAll();
+        return new ResponseEntity<>(auteurs, HttpStatus.OK);
+    }
+
+    @GetMapping(params = {"nom", "prenom"})
+    public ResponseEntity<?> getAuteurByNomAndPrenom(@RequestParam("nom") String nom,
+                                                        @RequestParam("prenom") String prenom) {
+        Auteur auteur = this.auteurResource.getAuteurByNomAndPrenom(nom, prenom);
+        return new ResponseEntity<>(auteur, HttpStatus.OK);
     }
 
     /*

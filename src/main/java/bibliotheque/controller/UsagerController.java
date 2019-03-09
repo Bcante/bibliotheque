@@ -1,6 +1,5 @@
 package bibliotheque.controller;
 
-import bibliotheque.model.Oeuvre;
 import bibliotheque.model.Usager;
 import bibliotheque.resource.UsagerResource;
 import org.springframework.http.HttpStatus;

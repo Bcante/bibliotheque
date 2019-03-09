@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="webapp/head"></head>
+<body>
+<div>
+    <ul class="nav justify-content-center">
+        <li class="nav-item">
+            <a class="nav-link" href="/" th:href="@{/}">
+                <span>Accueil</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/" th:href="@{/emprunts/}">
+                <span>Emprunts </span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/" th:href="@{/reservations/}">
+                <span>Reservations </span>
+            </a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Oeuvres</a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="/" th:href="@{/oeuvres/}">Toutes les oeuvres</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/" th:href="@{/oeuvres/livres/}">Livres</a>
+                <a class="dropdown-item" href="/" th:href="@{/oeuvres/magasines/}">Magasines</a>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/" th:href="@{/exemplaires/}">
+                <span>Exemplaires</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/" th:href="@{/auteurs/}">
+                <span>Auteurs</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/" th:href="@{/usagers/actifs}">
+                <span>Usagers </span>
+            </a>
+        </li>
+    </ul>
+</div>

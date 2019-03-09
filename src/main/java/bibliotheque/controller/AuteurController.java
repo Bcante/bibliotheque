@@ -22,7 +22,7 @@ public class AuteurController {
         ModelAndView modelAndView = new ModelAndView();
 
         modelAndView.addObject("auteurs", this.auteurResource.findAll());
-        modelAndView.setViewName("webapp/model/auteurs");
+        modelAndView.setViewName("webapp/pages/auteurs");
 
         return modelAndView;
     }

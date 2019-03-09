@@ -3,10 +3,7 @@ package bibliotheque.model;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.MapKeyColumn;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -27,10 +24,11 @@ public class Usager {
     private String adresse;
 
     @NotNull
+    @Column(unique = true)
     private String mail;
 
-    @ColumnDefault(value = "true")
-    private boolean actif;
+    @ColumnDefault("true")
+    private boolean actif = true;
 
     public Usager() {
     }
@@ -40,7 +38,6 @@ public class Usager {
         this.prenom = prenom;
         this.adresse = adresse;
         this.mail = mail;
-        this.actif = true;
     }
 
     public String getIdusager() {

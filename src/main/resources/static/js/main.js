@@ -23,3 +23,14 @@ function newAuteur() {
     envoyerRequete('/auteurs/', data, "POST");
     // code avec le résultat de envoyerRequete()....
 }
+
+function newUsager() {
+    var data = {
+        "nom": $("#nomUsager").val(),
+        "prenom": $("#prenomUsager").val(),
+        "adresse": $("#adresseUsager").val(),
+        "mail": $("#mailUsager").val()
+    };
+    envoyerRequete('/usagers/', data, "POST");
+    // code avec le résultat de envoyerRequete()....
+}

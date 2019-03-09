@@ -4,18 +4,18 @@
 <body>
 <nav th:replace="webapp/nav"></nav>
 <div class="container">
-    <h2>Auteurs</h2>
+    <h2 class="top-space-l">Auteurs</h2>
 
     <h5 class="top-space-l">Ajouter un auteur</h5>
     <form onsubmit="newAuteur()">
         <div class="form-row">
             <div class="col form-group">
                 <label for="prenomAuteur">Prenom*</label>
-                <input type="text" class="form-control" id="prenomAuteur" placeholder="Prenom auteur" required>
+                <input type="text" class="form-control" id="prenomAuteur" placeholder="Prenom" required>
             </div>
             <div class="col form-group">
                 <label for="nomAuteur">Nom*</label>
-                <input type="text" class="form-control" id="nomAuteur" placeholder="Nom auteur" required>
+                <input type="text" class="form-control" id="nomAuteur" placeholder="Nom" required>
             </div>
         </div>
         <p><small>Les champs accompagnés d'un * sont obligatoires.</small></p>

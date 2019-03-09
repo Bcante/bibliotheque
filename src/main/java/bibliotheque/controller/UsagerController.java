@@ -5,6 +5,7 @@ import bibliotheque.resource.UsagerResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,9 +27,14 @@ public class UsagerController {
     }
 
     @GetMapping(value = "/actifs")
-    public ResponseEntity<?> getAllActifs() {
-        List<Usager> usagers = usagerResource.getUsagersByActifTrue();
-        return new ResponseEntity<>(usagers, HttpStatus.OK);
+    public ModelAndView getAllActifs() {
+        ModelAndView modelAndView = new ModelAndView();
+
+        modelAndView.addObject("usagers", usagerResource.getUsagersByActifTrue());
+        modelAndView.setViewName("webapp/pages/usagers");
+
+        return modelAndView;
+
     }
 
     @GetMapping(value = "/nonactifs")

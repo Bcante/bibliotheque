@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="webapp/head"></head>
+<body>
+<nav th:replace="webapp/nav"></nav>
+<div class="container">
+    <h2 class="top-space-l">Usagers</h2>
+
+    <h5 class="top-space-l">Ajouter un usager</h5>
+    <form onsubmit="newUsager()">
+        <div class="form-row">
+            <div class="col form-group">
+                <label for="prenomUsager">Prenom*</label>
+                <input type="text" class="form-control" id="prenomUsager" placeholder="Prenom" required>
+            </div>
+            <div class="col form-group">
+                <label for="nomUsager">Nom*</label>
+                <input type="text" class="form-control" id="nomUsager" placeholder="Nom" required>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col form-group">
+                <label for="adresseUsager">Adresse*</label>
+                <input type="text" class="form-control" id="adresseUsager" placeholder="Adresse" required>
+            </div>
+            <div class="col form-group">
+                <label for="mailUsager">Mail*</label>
+                <input type="email" class="form-control" id="mailUsager" placeholder="Mail" required>
+            </div>
+        </div>
+        <p><small>Les champs accompagnés d'un * sont obligatoires.</small></p>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+        </div>
+    </form>
+
+    <div id="usager-success" class="alert alert-success hide-alert" role="alert">
+        Usager enregistré.
+    </div>
+
+    <div id="usager-danger" class="alert alert-danger hide-alert" role="alert">
+        Une erreur est survenue.
+    </div>
+
+    <h5 class="top-space-xl">Liste des usagers</h5>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Prénom</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Adresse</th>
+            <th scope="col">Mail</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="usager : ${usagers}">
+            <tr>
+                <!--/*@thymesVar id="usager" type="bibliotheque.model.Usager"*/-->
+                <td th:text="${usager.getPrenom()}"></td>
+                <td th:text="${usager.getNom()}"></td>
+                <td th:text="${usager.getAdresse()}"></td>
+                <td th:text="${usager.getMail()}"></td>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+</div>

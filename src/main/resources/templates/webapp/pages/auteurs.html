@@ -6,48 +6,82 @@
 <div class="container">
     <h2 class="top-space-l">Auteurs</h2>
 
-    <h5 class="top-space-l">Ajouter un auteur</h5>
-    <form onsubmit="newAuteur()">
-        <div class="form-row">
-            <div class="col form-group">
-                <label for="prenomAuteur">Prenom*</label>
-                <input type="text" class="form-control" id="prenomAuteur" placeholder="Prenom" required>
+    <div class="accordion top-space-l" id="accordionAuteurs">
+        <div class="card">
+            <div class="card-header" id="headingOneAuteur">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOneAuteur" aria-expanded="true" aria-controls="collapseOneAuteur">
+                        Ajouter un auteur
+                    </button>
+                </h5>
             </div>
-            <div class="col form-group">
-                <label for="nomAuteur">Nom*</label>
-                <input type="text" class="form-control" id="nomAuteur" placeholder="Nom" required>
+
+            <div id="collapseOneAuteur" class="collapse show" aria-labelledby="headingOneAuteur" data-parent="#accordionAuteurs">
+                <div class="card-body">
+
+                    <form onsubmit="newAuteur()">
+                        <div class="form-row">
+                            <div class="col form-group">
+                                <label for="prenomAuteur">Prenom*</label>
+                                <input type="text" class="form-control" id="prenomAuteur" placeholder="Prenom" required>
+                            </div>
+                            <div class="col form-group">
+                                <label for="nomAuteur">Nom*</label>
+                                <input type="text" class="form-control" id="nomAuteur" placeholder="Nom" required>
+                            </div>
+                        </div>
+                        <p><small>Les champs accompagnés d'un * sont obligatoires.</small></p>
+                        <div class="form-group">
+                            <button class="btn btn-primary">Enregistrer</button>
+                        </div>
+                    </form>
+
+                    <div id="newauteur-success" class="alert alert-success alert-dismissible fade show hide-alert" role="alert">
+                        Auteur enregistré
+                        <button type="button" class="close close-success" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div id="newauteur-danger" class="alert alert-danger alert-dismissible fade show hide-alert" role="alert">
+                        Ajout impossible.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                </div>
             </div>
         </div>
-        <p><small>Les champs accompagnés d'un * sont obligatoires.</small></p>
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary">Enregistrer</button>
+        <div class="card">
+            <div class="card-header" id="headingTwoAuteur">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwoAuteur" aria-expanded="false" aria-controls="collapseTwoAuteur">
+                        Liste des auteurs
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseTwoAuteur" class="collapse" aria-labelledby="headingTwoAuteur" data-parent="#accordionAuteurs">
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Prénom</th>
+                            <th scope="col">Nom</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="auteur : ${auteurs}">
+                            <tr>
+                                <!--/*@thymesVar id="auteur" type="bibliotheque.model.Auteur"*/-->
+                                <td th:text="${auteur.getPrenom()}"></td>
+                                <td th:text="${auteur.getNom()}"></td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-    </form>
-
-    <div id="auteur-success" class="alert alert-success hide-alert" role="alert">
-        Auteur enregistré.
     </div>
-
-    <div id="auteur-danger" class="alert alert-danger hide-alert" role="alert">
-        Une erreur est survenue.
-    </div>
-
-    <h5 class="top-space-xl">Liste des auteurs</h5>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Prénom</th>
-                <th scope="col">Nom</th>
-            </tr>
-        </thead>
-        <tbody>
-            <th:block th:each="auteur : ${auteurs}">
-                <tr>
-                    <!--/*@thymesVar id="auteur" type="bibliotheque.model.Auteur"*/-->
-                    <td th:text="${auteur.getPrenom()}"></td>
-                    <td th:text="${auteur.getNom()}"></td>
-                </tr>
-            </th:block>
-        </tbody>
-    </table>
 </div>

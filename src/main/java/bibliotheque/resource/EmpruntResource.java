@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @RepositoryRestResource(collectionResourceRel = "emprunt")
 public interface EmpruntResource extends JpaRepository<Emprunt, String> {
 
@@ -17,5 +19,7 @@ public interface EmpruntResource extends JpaRepository<Emprunt, String> {
 
     Emprunt getEmpruntByExemplaireAndStatut(@RequestParam Exemplaire exemplaire,
                                             @RequestParam StatutEmprunt statut);
+
+    List<Emprunt> getEmpruntsByStatutEquals(@RequestParam StatutEmprunt statut);
 
 }

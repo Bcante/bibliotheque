@@ -1,8 +1,4 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="webapp/head"></head>
-<body>
-<div>
+<div xmlns:th="http://www.thymeleaf.org">
     <ul class="nav justify-content-center">
         <li class="nav-item">
             <a class="nav-link" href="/" th:href="@{/}">
@@ -10,13 +6,13 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/" th:href="@{/emprunts/}">
+            <a class="nav-link" href="" th:href="@{/emprunts/encours}">
                 <span>Emprunts </span>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/" th:href="@{/reservations/}">
-                <span>Reservations </span>
+            <a class="nav-link" href="/" th:href="@{/reservations/encours}">
+                <span>Réservations </span>
             </a>
         </li>
         <li class="nav-item dropdown">
@@ -29,7 +25,7 @@
             </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/" th:href="@{/exemplaires/}">
+            <a class="nav-link" href="/" th:href="@{/exemplaires/nondetruits}">
                 <span>Exemplaires</span>
             </a>
         </li>

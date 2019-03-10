@@ -1,0 +1,144 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="webapp/head"></head>
+<body>
+<nav th:replace="webapp/nav"></nav>
+<div class="container">
+    <h2 class="top-space-l">Exemplaires</h2>
+
+    <div class="accordion top-space-l" id="accordionExemplaire">
+        <div class="card">
+            <div class="card-header" id="headingOneExemplaire">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOneExemplaire" aria-expanded="true" aria-controls="collapseOneExemplaire">
+                        Ajouter un exemplaire
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseOneExemplaire" class="collapse show" aria-labelledby="headingOneExemplaire" data-parent="#accordionExemplaire">
+                <div class="card-body">
+
+                    <form onsubmit="newExemplaire()">
+                        <div class="form-row">
+                            <div class="col form-group">
+                                <label for="titreoeuvre-newexemplaire">Titre de l'oeuvre*</label>
+                                <select id="titreoeuvre-newexemplaire" class="form-control">
+                                    <!--/*@thymesVar id="oeuvre" type="bibliotheque.model.Oeuvre"*/-->
+                                    <!--/*@thymesVar id="oeuvres" type="bibliotheque.model.Oeuvre"*/-->
+                                    <option th:each="oeuvre : ${oeuvres}"
+                                            th:value="${{oeuvre.getTitre()}}"
+                                            th:text="${oeuvre.getTitre()}">
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col form-group">
+                                <label for="etat-newexemplaire">Etat de l'exemplaire*</label>
+                                <select id="etat-newexemplaire" class="form-control">
+                                    <!--/*@thymesVar id="etat" type="bibliotheque.model.enumeration.Etat"*/-->
+                                    <!--/*@thymesVar id="etats" type="bibliotheque.model.enumeration.Etat"*/-->
+                                    <option th:each="etat : ${etats}"
+                                            th:value="${{etat.name()}}"
+                                            th:text="${etat.toString()}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <p><small>Les champs accompagnés d'un * sont obligatoires.</small></p>
+                        <div class="form-group">
+                            <button class="btn btn-primary">Enregistrer</button>
+                        </div>
+                    </form>
+
+                    <div id="newexemplaire-success" class="alert alert-success alert-dismissible fade show hide-alert" role="alert">
+                        Exemplaire enregistré.
+                        <button type="button" class="close close-success" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div id="newexemplaire-danger" class="alert alert-danger alert-dismissible fade show hide-alert" role="alert">
+                        Une erreur est survenue.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingTwoExemplaire">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTwoExemplaire" aria-expanded="false" aria-controls="collapseTwoExemplaire">
+                            Supprimer un exemplaire
+                        </button>
+                    </h5>
+                </div>
+
+                <div id="collapseTwoExemplaire" class="collapse" aria-labelledby="headingTwoExemplaire" data-parent="#accordionExemplaire">
+                    <div class="card-body">
+                        <form onsubmit="deleteExemplaire()">
+                            <div class="form-row">
+                                <div class="col form-group">
+                                    <label for="idExemplaireDeleteExemplaire">Identifiant de l'exemplaire*</label>
+                                    <input type="text" class="form-control" id="idExemplaireDeleteExemplaire" placeholder="Id exemplaire" required>
+                                </div>
+                            </div>
+                            <p><small>Les champs accompagnés d'un * sont obligatoires.</small></p>
+                            <div class="form-group">
+                                <button class="btn btn-primary">Supprimer</button>
+                            </div>
+                        </form>
+                        <div id="deleteexemplaire-success" class="alert alert-success alert-dismissible fade show hide-alert" role="alert">
+                            Exemplaire supprimé.
+                            <button type="button" class="close close-success" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div id="deleteexemplaire-danger" class="alert alert-danger alert-dismissible fade show hide-alert" role="alert">
+                            Suppression impossible.
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingThreeExemplaire">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseThreeExemplaire" aria-expanded="false" aria-controls="collapseThreeExemplaire">
+                            Liste des exemplaires
+                        </button>
+                    </h5>
+                </div>
+
+                <div id="collapseThreeExemplaire" class="collapse" aria-labelledby="headingThreeExemplaire" data-parent="#accordionExemplaire">
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Titre</th>
+                                <th scope="col">ISBN</th>
+                                <th scope="col">Disponible</th>
+                                <th scope="col">Etat</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <th:block th:each="exemplaire: ${exemplaires}">
+                                <tr>
+                                    <!--/*@thymesVar id="exemplaire" type="bibliotheque.model.Exemplaire"*/-->
+                                    <td th:text="${exemplaire.getOeuvre().getTitre()}"></td>
+                                    <td th:text="${exemplaire.getOeuvre().getISBN()}"></td>
+                                    <td th:text="${exemplaire.getOeuvre().getDisponible() == true} ? 'Oui' : 'Non'"></td>
+                                    <td th:text="${exemplaire.getEtat().name()}"></td>
+                                </tr>
+                            </th:block>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="webapp/head"></head>
+<body>
+<nav th:replace="webapp/nav"></nav>
+<div class="container">
+    <h2 class="top-space-l">Réservations</h2>
+
+    <!--/*@thymesVar id="oeuvre" type="bibliotheque.model.Oeuvre"*/-->
+    <div class="top-space-l accordion" id="accordionReservations">
+        <div class="card">
+            <div class="card-header" id="headingOneReservation">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOneReservation" aria-expanded="true" aria-controls="collapseOneReservation">
+                        Ajouter une réservation
+                    </button>
+                </h5>
+            </div>
+
+            <div id="collapseOneReservation" class="collapse show" aria-labelledby="headingOneReservation" data-parent="#accordionReservations">
+                <div class="card-body">
+
+                    <form onsubmit="newReservation()">
+                        <div class="form-row">
+                            <div class="col form-group">
+                                <label for="idUsagerNewReservation">Identifiant usager*</label>
+                                <input type="text" class="form-control" id="idUsagerNewReservation" placeholder="Identifiant usager" required>
+                            </div>
+                            <div class="col form-group">
+                                <label for="titreoeuvre-newreservation">Titre de l'oeuvre*</label>
+                                <select id="titreoeuvre-newreservation" class="form-control">
+                                    <option th:each="oeuvre : ${oeuvres}"
+                                            th:value="${{oeuvre.getTitre()}}"
+                                            th:text="${oeuvre.getTitre()}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <p><small>Les champs accompagnés d'un * sont obligatoires.</small></p>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                        </div>
+                    </form>
+
+                    <div id="newreservation-success" class="alert alert-success alert-dismissible fade show hide-alert" role="alert">
+                        Réservation enregistrée.
+                        <button type="button" class="close close-success" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div id="newreservation-danger" class="alert alert-danger alert-dismissible fade show hide-alert" role="alert">
+                        Réservation impossible.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingTwoReservation">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTwoReservation" aria-expanded="false" aria-controls="collapseTwoReservation">
+                        Annuler une réservation
+                    </button>
+                </h5>
+            </div>
+
+            <div id="collapseTwoReservation" class="collapse" aria-labelledby="headingTwoReservation" data-parent="#accordionReservations">
+                <div class="card-body">
+
+                    <form onsubmit="annulerReservation()">
+                        <div class="form-row">
+                            <div class="col form-group">
+                                <label for="idUsagerAnnulerReservation">Identifiant usager*</label>
+                                <input type="text" class="form-control" id="idUsagerAnnulerReservation" placeholder="Identifiant usager" required>
+                            </div>
+                            <div class="col form-group">
+                                <label for="titreoeuvre-annulation">Titre de l'oeuvre*</label>
+                                <select id="titreoeuvre-annulation" class="form-control">
+                                    <option th:each="oeuvre : ${oeuvres}"
+                                            th:value="${{oeuvre.getTitre()}}"
+                                            th:text="${oeuvre.getTitre()}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <p><small>Les champs accompagnés d'un * sont obligatoires.</small></p>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Sauvegarder</button>
+                        </div>
+                    </form>
+
+                    <div id="annulerreservation-success" class="alert alert-success alert-dismissible fade show hide-alert" role="alert">
+                        Réservation annulée.
+                        <button type="button" class="close close-success" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div id="annulerreservation-danger" class="alert alert-danger alert-dismissible fade show hide-alert" role="alert">
+                        Annulation impossible.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingThreeReservation">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseThreeReservation" aria-expanded="false" aria-controls="collapseThreeReservation">
+                        Liste des réservations
+                    </button>
+                </h5>
+            </div>
+
+            <div id="collapseThreeReservation" class="collapse" aria-labelledby="headingThreeReservation" data-parent="#accordionReservations">
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Usager</th>
+                            <th scope="col">Titre de l'oeuvre</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="reservation : ${reservations}">
+                            <tr>
+                                <!--/*@thymesVar id="reservation" type="bibliotheque.model.Reservation"*/-->
+                                <td th:text="${reservation.getUsager().getMail()}"></td>
+                                <td th:text="${reservation.getOeuvre().getTitre()}"></td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

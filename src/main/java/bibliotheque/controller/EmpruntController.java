@@ -7,13 +7,16 @@ import bibliotheque.model.enumeration.StatutReservation;
 import bibliotheque.resource.*;
 import bibliotheque.tools.Tools;
 import com.fasterxml.jackson.databind.JsonNode;
+import org.hibernate.annotations.DynamicInsert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.jws.WebParam;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -41,6 +44,14 @@ public class EmpruntController {
         return null;
     }
 
+    @GetMapping(value = "/encours")
+    public ModelAndView findAllEnCours() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("emprunts", empruntResource.getEmpruntsByStatutEquals(StatutEmprunt.EN_COURS));
+        modelAndView.setViewName("webapp/pages/emprunts");
+        return modelAndView;
+    }
+
     @GetMapping(value = "/{id}")
     public ModelAndView findOneEmpruntById(@PathVariable("id") String id) {
         if(!empruntResource.existsById(id)) {
@@ -59,6 +70,7 @@ public class EmpruntController {
     @PostMapping
     public ResponseEntity<?> newEmprunt(HttpEntity<String> infoEmprunt) throws IOException {
         String body = infoEmprunt.getBody();
+
         if(body == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -85,43 +97,11 @@ public class EmpruntController {
 
         // on passe la reservation correpondante à l'emprunt à "terminée"
         Reservation reservation = reservationResource.getReservationByUsagerAndOeuvreAndStatut(usager.get(), exemplaire.get().getOeuvre(), StatutReservation.EN_COURS);
-        if(reservation != null) {
-            reservation.setStatut(StatutReservation.EN_COURS);
+        if (reservation != null) {
+            reservation.setStatut(StatutReservation.TERMINEE);
             reservationResource.save(reservation);
         }
         return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
-    /*
-    {
-        "idusager":"XXXX",
-        "idexemplaire":"YYYY"
-    }
-     */
-    @PutMapping(value = "/rendre")
-    public ResponseEntity<?> rendreEmprunt(HttpEntity<String> infoEmprunt) throws IOException {
-        String body = infoEmprunt.getBody();
-        if(body == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        JsonNode node = Tools.createObjectMapper().readTree(body);
-        String idexemplaire = node.get("idexemplaire").asText();
-        String idusager = node.get("idusager").asText();
-
-        Optional<Exemplaire> exemplaire = exemplaireResource.findById(idexemplaire);
-        Optional<Usager> usager = usagerResource.findById(idusager);
-        if(!exemplaire.isPresent() || !usager.isPresent() || !usager.get().getActif()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        exemplaire.get().setDisponible(true);
-        exemplaireResource.save(exemplaire.get());
-
-        Emprunt emprunt = empruntResource.getEmpruntByUsagerAndExemplaireAndStatut(usager.get(), exemplaire.get(), StatutEmprunt.EN_COURS);
-        emprunt.setStatut(StatutEmprunt.TERMINE);
-        empruntResource.save(emprunt);
-
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /*
@@ -133,6 +113,7 @@ public class EmpruntController {
     @DeleteMapping
     public ResponseEntity<?> terminerEmprunt(HttpEntity<String> infoEmprunt) throws IOException {
         String body = infoEmprunt.getBody();
+
         if(body == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -150,8 +131,13 @@ public class EmpruntController {
         if(emprunt == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+
+        exemplaire.get().setDisponible(true);
+        exemplaireResource.save(exemplaire.get());
+
         emprunt.setStatut(StatutEmprunt.TERMINE);
         empruntResource.save(emprunt);
+
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

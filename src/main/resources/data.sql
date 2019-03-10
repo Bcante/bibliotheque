@@ -7,7 +7,7 @@ ALTER TABLE livre ADD FOREIGN KEY (idauteur) REFERENCES auteur(idauteur) ON UPDA
 ALTER TABLE livre ADD FOREIGN KEY (idoeuvre) REFERENCES oeuvre(idoeuvre) ON UPDATE CASCADE
 ALTER TABLE magasine ADD FOREIGN KEY (idoeuvre) REFERENCES oeuvre(idoeuvre) ON UPDATE CASCADE
 
-INSERT INTO usager (idusager, prenom, nom, adresse, mail) VALUES ('a5fae491-b747-4dbf-b4c0-d88fda5618ba', 'Henri', 'Couturier', '77 rue de la Hulotais', 'henri.coutirier@hotmail.fr')
+INSERT INTO usager (idusager, prenom, nom, adresse, mail) VALUES ('a5fae491-b747-4dbf-b4c0-d88fda5618ba', 'Henry', 'Pineapple', '77 rue de la Hulotais', 'henry.pineapple@hotmail.fr')
 INSERT INTO usager (idusager, prenom, nom, adresse, mail) VALUES ('93632769-e21b-45c7-a88b-356ca1ba35fa', 'Fabienne', 'Begin', '76 Faubourg Saint Honore', 'fabienne.begin@gmail.com'),
 INSERT INTO usager (idusager, prenom, nom, adresse, mail) VALUES ('f47a929c-c566-4282-bf4c-135d9dd094d8', 'Christophe', 'Boisvert', '130 rue La Boetie', 'chris.boisvert@gmail.com')
 INSERT INTO usager (idusager, prenom, nom, adresse, mail) VALUES ('dc682f8b-8b91-497b-a51a-3ed18fe47a97', 'Loic', 'Camutis', '78 rue Reine Elisabeth', 'loiccamutis@gmail.com')

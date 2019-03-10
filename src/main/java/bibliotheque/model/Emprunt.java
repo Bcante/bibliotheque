@@ -1,6 +1,7 @@
 package bibliotheque.model;
 
 import bibliotheque.model.enumeration.StatutEmprunt;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;

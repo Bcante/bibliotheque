@@ -1,0 +1,139 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="webapp/head"></head>
+<body>
+<nav th:replace="webapp/nav"></nav>
+<div class="container">
+    <h2 class="top-space-l">Emprunts</h2>
+
+    <div class="top-space-l accordion" id="accordionEmprunts">
+        <div class="card">
+            <div class="card-header" id="headingOneEmprunt">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOneEmprunt" aria-expanded="true" aria-controls="collapseOneEmprunt">
+                        Ajouter un emprunt
+                    </button>
+                </h5>
+            </div>
+
+            <div id="collapseOneEmprunt" class="collapse show" aria-labelledby="headingOneEmprunt" data-parent="#accordionEmprunts">
+                <div class="card-body">
+
+                    <form onsubmit="newEmprunt()">
+                        <div class="form-row">
+                            <div class="col form-group">
+                                <label for="idUsagerNewEmprunt">Identifiant usager*</label>
+                                <input type="text" class="form-control" id="idUsagerNewEmprunt" placeholder="Id usager" required>
+                            </div>
+                            <div class="col form-group">
+                                <label for="idExemplaireNewEmprunt">Identifiant exemplaire*</label>
+                                <input type="text" class="form-control" id="idExemplaireNewEmprunt" placeholder="Id exemplaire" required>
+                            </div>
+                        </div>
+                        <p><small>Les champs accompagnés d'un * sont obligatoires.</small></p>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                        </div>
+                    </form>
+
+                    <div id="newemprunt-success" class="alert alert-success alert-dismissible fade show hide-alert" role="alert">
+                        Emprunt enregistré.
+                        <button type="button" class="close close-success" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div id="newemprunt-danger" class="alert alert-danger alert-dismissible fade show hide-alert" role="alert">
+                        Ajout impossible.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingTwoEmprunt">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTwoEmprunt" aria-expanded="false" aria-controls="collapseTwoEmprunt">
+                        Effectuer un rendu
+                    </button>
+                </h5>
+            </div>
+
+            <div id="collapseTwoEmprunt" class="collapse" aria-labelledby="headingTwoEmprunt" data-parent="#accordionEmprunts">
+                <div class="card-body">
+                    <form onsubmit="terminerEmprunt()">
+                        <div class="form-row">
+                            <div class="col form-group">
+                                <label for="idUsagerTerminerEmprunt">Identifiant usager*</label>
+                                <input type="text" class="form-control" id="idUsagerTerminerEmprunt" placeholder="Id usager" required>
+                            </div>
+                            <div class="col form-group">
+                                <label for="idExemplaireTerminerEmprunt">Identifiant exemplaire*</label>
+                                <input type="text" class="form-control" id="idExemplaireTerminerEmprunt" placeholder="Id exemplaire" required>
+                            </div>
+                        </div>
+                        <p><small>Les champs accompagnés d'un * sont obligatoires.</small></p>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Sauvegarder</button>
+                        </div>
+                    </form>
+
+                    <div id="rendreemprunt-success" class="alert alert-success alert-dismissible fade show hide-alert" role="alert">
+                        Rendu effectué.
+                        <button type="button" class="close close-success" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div id="rendreemprunt-danger" class="alert alert-danger alert-dismissible fade show hide-alert" role="alert">
+                        Rendu impossible.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingThreeEmprunt">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseThreeEmprunt" aria-expanded="false" aria-controls="collapseThreeEmprunt">
+                        Liste des emprunts
+                    </button>
+                </h5>
+            </div>
+
+            <div id="collapseThreeEmprunt" class="collapse" aria-labelledby="headingThreeEmprunt" data-parent="#accordionEmprunts">
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Usager</th>
+                            <th scope="col">Exemplaire</th>
+                            <th scope="col">Date de rendu</th>
+                            <th scope="col">Statut</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="emprunt : ${emprunts}">
+                            <tr>
+                                <!--/*@thymesVar id="emprunt" type="bibliotheque.model.Emprunt"*/-->
+                                <td th:text="${emprunt.getUsager().getMail()}"></td>
+                                <td th:text="${emprunt.getExemplaire().getOeuvre().getTitre()}"></td>
+                                <td th:text="${emprunt.getDaterendu()}"></td>
+                                <td th:text="${emprunt.getStatut()}"></td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

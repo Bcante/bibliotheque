@@ -3,6 +3,7 @@ package bibliotheque.controller;
 import bibliotheque.model.Exemplaire;
 import bibliotheque.model.Oeuvre;
 import bibliotheque.model.enumeration.Etat;
+import bibliotheque.model.enumeration.StatutEmprunt;
 import bibliotheque.resource.ExemplaireResource;
 import bibliotheque.resource.OeuvreResource;
 import bibliotheque.tools.Tools;
@@ -10,7 +11,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.util.List;
@@ -34,6 +37,16 @@ public class ExemplaireController {
         return new ResponseEntity<>(exemplaires, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/nondetruits")
+    public ModelAndView getAllExemplairesNonDetruit() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("exemplaires", exemplaireResource.getExemplairesByEtatNot(Etat.DETRUIT));
+        modelAndView.addObject("oeuvres", oeuvreResource.getOeuvresByDisponibleTrue());
+        modelAndView.addObject("etats", Etat.values());
+        modelAndView.setViewName("webapp/pages/exemplaires");
+        return modelAndView;
+    }
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> getOneExemplaire(@PathVariable("id") String idexemplaire) {
         Optional<Exemplaire> exemplaire = exemplaireResource.findById(idexemplaire);
@@ -49,7 +62,7 @@ public class ExemplaireController {
         if(!oeuvre.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        List<Exemplaire> exemplaires = exemplaireResource.getExemplairesByDisponibleTrueAndOeuvre(oeuvre.get());
+        List<Exemplaire> exemplaires = exemplaireResource.getExemplairesByDisponibleTrueAndOeuvreAndEtatNot(oeuvre.get(), Etat.DETRUIT);
         return new ResponseEntity<>(exemplaires, HttpStatus.OK);
     }
 
@@ -85,7 +98,9 @@ public class ExemplaireController {
         if(!exemplaire.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        exemplaireResource.delete(exemplaire.get());
+        exemplaire.get().setEtat(Etat.DETRUIT);
+        exemplaire.get().setDisponible(false);
+        exemplaireResource.save(exemplaire.get());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

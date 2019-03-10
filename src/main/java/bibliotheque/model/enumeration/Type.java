@@ -1,12 +1,12 @@
 package bibliotheque.model.enumeration;
 
 public enum Type {
-    SPORT("sport"),
-    AUTOMOBILE("automobile"),
-    PEOPLE("people"),
-    CULTURE("culture"),
-    CUISINE("cuisine"),
-    ACTUALITE("actualite");
+    SPORT("Sport"),
+    AUTOMOBILE("Automobile"),
+    PEOPLE("People"),
+    CULTURE("Culture"),
+    CUISINE("Cuisine"),
+    ACTUALITE("Actualite");
 
     private String type;
 

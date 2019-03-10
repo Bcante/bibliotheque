@@ -1,7 +1,9 @@
 package bibliotheque.controller;
 
+import bibliotheque.model.Livre;
 import bibliotheque.model.Magasine;
 import bibliotheque.model.Oeuvre;
+import bibliotheque.model.enumeration.Etat;
 import bibliotheque.model.enumeration.Type;
 import bibliotheque.resource.MagasineResource;
 import bibliotheque.resource.OeuvreResource;
@@ -51,9 +53,7 @@ public class MagasineController {
         String parution = node.get("parution").asText();
         String type = node.get("type").asText();
 
-        Oeuvre oeuvre = new Oeuvre(titre, isbn, LocalDate.parse(parution));
-        oeuvreResource.save(oeuvre);
-        Magasine magasine = new Magasine(oeuvre, Type.valueOf(type));
+        Magasine magasine = new Magasine(Type.valueOf(type), titre, isbn, LocalDate.parse(parution));
         magasineResource.save(magasine);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

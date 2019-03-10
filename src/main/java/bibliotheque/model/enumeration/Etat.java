@@ -1,11 +1,11 @@
 package bibliotheque.model.enumeration;
 
 public enum Etat {
-    NEUF("neuf"),
-    BON("bon"),
-    USE("usé"),
-    TRES_USE("très usé"),
-    DETRUIT("détruit");
+    NEUF("Neuf"),
+    BON("Bon"),
+    USE("Usé"),
+    TRES_USE("Très usé"),
+    DETRUIT("Détruit");
 
     private String etat;
 

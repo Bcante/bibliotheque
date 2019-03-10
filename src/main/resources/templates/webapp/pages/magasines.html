@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="webapp/head"></head>
+<body>
+<nav th:replace="webapp/nav"></nav>
+<div class="container">
+    <h2 class="top-space-l">Magasines</h2>
+
+    <div class="accordion top-space-l" id="accordionMagasine">
+        <div class="card">
+            <div class="card-header" id="headingOneMagasine">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOneMagasine" aria-expanded="true" aria-controls="collapseOneMagasine">
+                        Ajouter un magasine
+                    </button>
+                </h5>
+            </div>
+
+            <div id="collapseOneMagasine" class="collapse show" aria-labelledby="headingOneMagasine" data-parent="#accordionMagasine">
+                <div class="card-body">
+
+                    <form onsubmit="newMagasine()">
+                        <div class="form-row">
+                            <div class="col form-group">
+                                <label for="titrelivre-newmagasine">Titre*</label>
+                                <input type="text" class="form-control" id="titrelivre-newmagasine" placeholder="Titre" required>
+                            </div>
+                            <div class="col form-group">
+                                <label for="isbn-newmagasine">ISBN*</label>
+                                <input type="text" class="form-control" id="isbn-newmagasine" placeholder="ISBN" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col form-group">
+                                <label for="dateparution-newmagasine">Date de parution (aaaa-MM-dd)*</label>
+                                <input type="text" class="form-control" id="dateparution-newmagasine" placeholder="Date de parution" required>
+                            </div>
+                            <div class="col form-group">
+                                <label for="type-newmagasine">Type de magasine*</label>
+                                <select id="type-newmagasine" class="form-control">
+                                    <!--/*@thymesVar id="type" type="bibliotheque.model.enumeration.Type"*/-->
+                                    <option th:each="type : ${types}"
+                                            th:value="${{type.name()}}"
+                                            th:text="${type.getType()}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <p><small>Les champs accompagnés d'un * sont obligatoires.</small></p>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                        </div>
+                    </form>
+
+                    <div id="magasine-success" class="alert alert-success alert-dismissible fade show hide-alert" role="alert">
+                        Magasine enregistré.
+                        <button type="button" class="close close-success" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div id="magasine-danger" class="alert alert-danger alert-dismissible fade show hide-alert" role="alert">
+                        Ajout impossible.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingTwoMagasine">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwoMagasine" aria-expanded="false" aria-controls="collapseTwoMagasine">
+                        Liste des magasines
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseTwoMagasine" class="collapse" aria-labelledby="headingTwoMagasine" data-parent="#accordionMagasine">
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Titre</th>
+                            <th scope="col">ISBN</th>
+                            <th scope="col">Date de parution</th>
+                            <th scope="col">Type</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="magasine : ${magasines}">
+                            <tr>
+                                <!--/*@thymesVar id="magasine" type="bibliotheque.model.Magasine"*/-->
+                                <td th:text="${magasine.getTitre()}"></td>
+                                <td th:text="${magasine.getISBN()}"></td>
+                                <td th:text="${magasine.getParution()}"></td>
+                                <td th:text="${magasine.getType()}"></td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

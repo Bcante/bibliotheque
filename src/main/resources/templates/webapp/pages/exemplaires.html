@@ -21,13 +21,13 @@
                     <form onsubmit="newExemplaire()">
                         <div class="form-row">
                             <div class="col form-group">
-                                <label for="titreoeuvre-newexemplaire">Titre de l'oeuvre*</label>
-                                <select id="titreoeuvre-newexemplaire" class="form-control">
+                                <label for="idoeuvre-newexemplaire">Titre de l'oeuvre*</label>
+                                <select id="idoeuvre-newexemplaire" class="form-control">
                                     <!--/*@thymesVar id="oeuvre" type="bibliotheque.model.Oeuvre"*/-->
                                     <!--/*@thymesVar id="oeuvres" type="bibliotheque.model.Oeuvre"*/-->
                                     <option th:each="oeuvre : ${oeuvres}"
-                                            th:value="${{oeuvre.getTitre()}}"
-                                            th:text="${oeuvre.getTitre()}">
+                                            th:value="${{oeuvre.getIdoeuvre()}}"
+                                            th:text="${oeuvre.getTitre() + ' , ' + oeuvre.getParution() + ' , ' + oeuvre.getISBN()}">
                                     </option>
                                 </select>
                             </div>
@@ -38,7 +38,7 @@
                                     <!--/*@thymesVar id="etats" type="bibliotheque.model.enumeration.Etat"*/-->
                                     <option th:each="etat : ${etats}"
                                             th:value="${{etat.name()}}"
-                                            th:text="${etat.toString()}">
+                                            th:text="${etat.getEtat()}">
                                     </option>
                                 </select>
                             </div>

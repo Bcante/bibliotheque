@@ -1,6 +1,7 @@
 package bibliotheque.model;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 public class Livre extends Oeuvre {
@@ -19,12 +20,8 @@ public class Livre extends Oeuvre {
     public Livre() {
     }
 
-    public Livre(Auteur auteur) {
-        this.auteur = auteur;
-    }
-
-    public Livre(Oeuvre oeuvre, Auteur auteur) {
-        this.oeuvre = oeuvre;
+    public Livre(Auteur auteur, String titre, String isbn, LocalDate parution) {
+        super(titre, isbn, parution);
         this.auteur = auteur;
     }
 

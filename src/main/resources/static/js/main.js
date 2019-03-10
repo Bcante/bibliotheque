@@ -82,7 +82,7 @@ function annulerReservation() {
 
 function newExemplaire() {
     let data = {
-        "titre" : $("#titreoeuvre-newexemplaire").val(),
+        "idoeuvre" : $("#idoeuvre-newexemplaire").val(),
         "etat" : $("#etat-newexemplaire").val()
     };
     let response = envoyerRequete('/exemplaires', data, "POST");
@@ -92,6 +92,33 @@ function newExemplaire() {
 function deleteExemplaire() {
     let response = envoyerRequete('/exemplaires/' + $('#idExemplaireDeleteExemplaire').val(), '', 'DELETE');
     showAndHideAlerts(response, '#deleteexemplaire-success', '#deleteexemplaire-danger');
+}
+
+function deleteOeuvre() {
+    let response = envoyerRequete('/oeuvres/' + $('#idoeuvre-deleteoeuvre').val(), '', 'DELETE');
+    showAndHideAlerts(response, '#deleteoeuvre-success', '#deleteoeuvre-danger');
+}
+
+function newLivre() {
+    let data = {
+        "titre" : $('#titrelivre-newlivre').val(),
+        "ISBN" : $('#isbn-newlivre').val(),
+        "parution" : $('#dateparution-newlivre').val(),
+        "idauteur" : $('#auteur-newlivre').val()
+    };
+    let response = envoyerRequete('/livres/', data, 'POST');
+    showAndHideAlerts(response, '#livre-success', '#livre-danger');
+}
+
+function newMagasine() {
+    let data = {
+        "titre" : $('#titrelivre-newmagasine').val(),
+        "ISBN" : $('#isbn-newmagasine').val(),
+        "parution" : $('#dateparution-newmagasine').val(),
+        "type" : $('#type-newmagasine').val()
+    };
+    let response = envoyerRequete('/magasines/', data, 'POST');
+    showAndHideAlerts(response, '#magasine-success', '#magasine-danger');
 }
 
 $(document).ready(function(){

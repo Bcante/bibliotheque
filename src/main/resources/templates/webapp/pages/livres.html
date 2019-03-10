@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="webapp/head"></head>
+<body>
+<nav th:replace="webapp/nav"></nav>
+<div class="container">
+    <h2 class="top-space-l">Livres</h2>
+
+    <div class="accordion top-space-l" id="accordionLivres">
+        <div class="card">
+            <div class="card-header" id="headingOneLivres">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOneLivres" aria-expanded="true" aria-controls="collapseOneLivres">
+                        Ajouter un livre
+                    </button>
+                </h5>
+            </div>
+
+            <div id="collapseOneLivres" class="collapse show" aria-labelledby="headingOneLivres" data-parent="#accordionLivres">
+                <div class="card-body">
+
+                    <form onsubmit="newLivre()">
+                        <div class="form-row">
+                            <div class="col form-group">
+                                <label for="titrelivre-newlivre">Titre*</label>
+                                <input type="text" class="form-control" id="titrelivre-newlivre" placeholder="Titre" required>
+                            </div>
+                            <div class="col form-group">
+                                <label for="isbn-newlivre">ISBN*</label>
+                                <input type="text" class="form-control" id="isbn-newlivre" placeholder="ISBN" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col form-group">
+                                <label for="dateparution-newlivre">Date de parution (aaaa-MM-dd)*</label>
+                                <input type="text" class="form-control" id="dateparution-newlivre" placeholder="Date de parution" required>
+                            </div>
+                            <div class="col form-group">
+                                <label for="auteur-newlivre">Nom de l'auteur*</label>
+                                <select id="auteur-newlivre" class="form-control">
+                                    <!--/*@thymesVar id="auteur" type="bibliotheque.model.Auteur"*/-->
+                                    <option th:each="auteur : ${auteurs}"
+                                            th:value="${{auteur.getIdauteur()}}"
+                                            th:text="${auteur.getPrenom() + ' ' + auteur.getNom()}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <p><small>Les champs accompagnés d'un * sont obligatoires.</small></p>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                        </div>
+                    </form>
+
+                    <div id="livre-success" class="alert alert-success alert-dismissible fade show hide-alert" role="alert">
+                        Livre enregistré.
+                        <button type="button" class="close close-success" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div id="livre-danger" class="alert alert-danger alert-dismissible fade show hide-alert" role="alert">
+                        Ajout impossible.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingTwoLivres">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwoLivres" aria-expanded="false" aria-controls="collapseTwoLivres">
+                        Liste des livres
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseTwoLivres" class="collapse" aria-labelledby="headingTwoLivres" data-parent="#accordionLivres">
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Titre</th>
+                            <th scope="col">ISBN</th>
+                            <th scope="col">Date de parution</th>
+                            <th scope="col">Auteur</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="livre : ${livres}">
+                            <tr>
+                                <!--/*@thymesVar id="oeuvre" type="bibliotheque.model.Oeuvre"*/-->
+                                <td th:text="${livre.getTitre()}"></td>
+                                <td th:text="${livre.getISBN()}"></td>
+                                <td th:text="${livre.getParution()}"></td>
+                                <td th:text="${livre.getAuteur().getPrenom() + ' ' + livre.getAuteur().getNom()}"></td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+    </div>
+</div>
+</body>
+</html>

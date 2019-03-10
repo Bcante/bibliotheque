@@ -2,8 +2,8 @@ package bibliotheque.model.enumeration;
 
 public enum StatutEmprunt {
 
-    EN_COURS("en cours"),
-    TERMINE("termine");
+    EN_COURS("En cours"),
+    TERMINE("Termine");
 
     private String statut;
 

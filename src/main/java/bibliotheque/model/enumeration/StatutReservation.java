@@ -2,9 +2,9 @@ package bibliotheque.model.enumeration;
 
 public enum StatutReservation {
 
-    EN_COURS("en cours"),
-    TERMINEE("terminée"),
-    ANNULEE("annulée");
+    EN_COURS("En cours"),
+    TERMINEE("Terminée"),
+    ANNULEE("Annulée");
 
     private String statut;
 

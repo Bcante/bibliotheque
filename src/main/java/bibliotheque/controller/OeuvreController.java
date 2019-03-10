@@ -1,13 +1,18 @@
 package bibliotheque.controller;
 
 import bibliotheque.model.Oeuvre;
+import bibliotheque.model.enumeration.Type;
+import bibliotheque.resource.AuteurResource;
 import bibliotheque.resource.LivreResource;
 import bibliotheque.resource.MagasineResource;
 import bibliotheque.resource.OeuvreResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.jws.WebParam;
 import java.util.Optional;
 
 @RestController
@@ -17,11 +22,13 @@ public class OeuvreController {
     private OeuvreResource oeuvreResource;
     private LivreResource livreResource;
     private MagasineResource magasineResource;
+    private AuteurResource auteurResource;
 
-    public OeuvreController(OeuvreResource oeuvreResource, LivreResource livreResource, MagasineResource magasineResource) {
+    public OeuvreController(OeuvreResource oeuvreResource, LivreResource livreResource, MagasineResource magasineResource, AuteurResource auteurResource) {
         this.oeuvreResource = oeuvreResource;
         this.livreResource = livreResource;
         this.magasineResource = magasineResource;
+        this.auteurResource = auteurResource;
     }
 
     @GetMapping(value = "/")
@@ -30,8 +37,11 @@ public class OeuvreController {
     }
 
     @GetMapping(value = "/disponibles")
-    public ResponseEntity<?> findOeuvreDisponible() {
-        return new ResponseEntity<>(this.oeuvreResource.getOeuvresByDisponibleTrue(), HttpStatus.OK);
+    public ModelAndView findOeuvreDisponible() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("oeuvres", this.oeuvreResource.getOeuvresByDisponibleTrue());
+        modelAndView.setViewName("webapp/pages/oeuvres");
+        return modelAndView;
     }
 
     @GetMapping(value = "/nondisponibles")
@@ -45,8 +55,12 @@ public class OeuvreController {
     }
 
     @GetMapping(value = "/livres/disponibles")
-    public ResponseEntity<?> findLivresDisponibles() {
-        return new ResponseEntity<>(livreResource.getByDisponibleTrue(), HttpStatus.OK);
+    public ModelAndView findLivresDisponibles() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("livres", this.livreResource.getByDisponibleTrue());
+        modelAndView.addObject("auteurs", this.auteurResource.findAll());
+        modelAndView.setViewName("webapp/pages/livres");
+        return modelAndView;
     }
 
     @GetMapping(value = "/livres/nondisponibles")
@@ -60,8 +74,12 @@ public class OeuvreController {
     }
 
     @GetMapping(value = "/magasines/disponibles")
-    public ResponseEntity<?> findMagasinesDisponibles() {
-        return new ResponseEntity<>(magasineResource.getByDisponibleTrue(), HttpStatus.OK);
+    public ModelAndView findMagasinesDisponibles() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("magasines", this.magasineResource.getByDisponibleTrue());
+        modelAndView.addObject("types", Type.values());
+        modelAndView.setViewName("webapp/pages/magasines");
+        return modelAndView;
     }
 
     @GetMapping(value = "/magasines/nondisponibles")
@@ -79,8 +97,8 @@ public class OeuvreController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<?> deleteOeuvre(@PathVariable("id") String idoeuvre) {
-        Optional<Oeuvre> oeuvre = this.oeuvreResource.findById(idoeuvre);
+    public ResponseEntity<?> deleteOeuvre(@PathVariable("id") String id) {
+        Optional<Oeuvre> oeuvre = this.oeuvreResource.findById(id);
         if(!oeuvre.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

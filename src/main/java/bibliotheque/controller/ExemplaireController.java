@@ -79,10 +79,10 @@ public class ExemplaireController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         JsonNode node = Tools.createObjectMapper().readTree(body);
-        String titre = node.get("titre").asText();
+        String idoeuvre = node.get("idoeuvre").asText();
         String etat = node.get("etat").asText();
 
-        Optional<Oeuvre> oeuvre = Optional.ofNullable(oeuvreResource.findByTitre(titre));
+        Optional<Oeuvre> oeuvre = oeuvreResource.findById(idoeuvre);
         if(!oeuvre.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="webapp/head"></head>
+<body>
+<nav th:replace="webapp/nav"></nav>
+<div class="container">
+    <h2 class="top-space-l">Oeuvres</h2>
+
+    <div class="accordion top-space-l" id="accordionOeuvres">
+        <div class="card">
+            <div class="card-header" id="headingOneOeuvres">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOneOeuvres" aria-expanded="true" aria-controls="collapseOneOeuvres">
+                        Supprimer une oeuvre
+                    </button>
+                </h5>
+            </div>
+
+            <div id="collapseOneOeuvres" class="collapse show" aria-labelledby="headingOneOeuvres" data-parent="#accordionOeuvres">
+                <div class="card-body">
+                    <form onsubmit="deleteOeuvre()">
+                        <div class="form-row">
+                            <div class="col form-group">
+                                <label for="idoeuvre-deleteoeuvre">Titre de l'oeuvre*</label>
+                                <select id="idoeuvre-deleteoeuvre" class="form-control">
+                                    <!--/*@thymesVar id="oeuvre" type="bibliotheque.model.Oeuvre"*/-->
+                                    <!--/*@thymesVar id="oeuvres" type="bibliotheque.model.Oeuvre"*/-->
+                                    <option th:each="oeuvre : ${oeuvres}"
+                                            th:value="${{oeuvre.getIdoeuvre()}}"
+                                            th:text="${oeuvre.getTitre() + ' , ' + oeuvre.getParution() + ' , ' + oeuvre.getISBN()}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <p><small>Les champs accompagnés d'un * sont obligatoires.</small></p>
+                        <div class="form-group">
+                            <button class="btn btn-primary">Supprimer</button>
+                        </div>
+                    </form>
+                    <div id="deleteoeuvre-success" class="alert alert-success alert-dismissible fade show hide-alert" role="alert">
+                        Oeuvre supprimée.
+                        <button type="button" class="close close-success" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div id="deleteoeuvre-danger" class="alert alert-danger alert-dismissible fade show hide-alert" role="alert">
+                        Suppression impossible.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingTwoOeuvres">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwoOeuvres" aria-expanded="false" aria-controls="collapseTwoOeuvres">
+                        Liste des oeuvres
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseTwoOeuvres" class="collapse" aria-labelledby="headingTwoOeuvres" data-parent="#accordionOeuvres">
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Titre</th>
+                            <th scope="col">ISBN</th>
+                            <th scope="col">Date de parution</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="oeuvre : ${oeuvres}">
+                            <tr>
+                                <!--/*@thymesVar id="oeuvre" type="bibliotheque.model.Oeuvre"*/-->
+                                <td th:text="${oeuvre.getTitre()}"></td>
+                                <td th:text="${oeuvre.getISBN()}"></td>
+                                <td th:text="${oeuvre.getParution()}"></td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

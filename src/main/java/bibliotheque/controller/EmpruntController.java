@@ -40,25 +40,10 @@ public class EmpruntController {
 
     @GetMapping(value = "/")
     public ModelAndView findAll() {
-        List<Emprunt> emprunts = empruntResource.findAll();
-        return null;
-    }
-
-    @GetMapping(value = "/encours")
-    public ModelAndView findAllEnCours() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("emprunts", empruntResource.getEmpruntsByStatutEquals(StatutEmprunt.EN_COURS));
         modelAndView.setViewName("webapp/pages/emprunts");
         return modelAndView;
-    }
-
-    @GetMapping(value = "/{id}")
-    public ModelAndView findOneEmpruntById(@PathVariable("id") String id) {
-        if(!empruntResource.existsById(id)) {
-            return null;
-        }
-        Optional<Emprunt> emprunt = empruntResource.findById(id);
-        return null;
     }
 
     /*

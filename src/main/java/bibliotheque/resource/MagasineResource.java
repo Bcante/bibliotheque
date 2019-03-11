@@ -10,6 +10,5 @@ import java.util.List;
 public interface MagasineResource extends JpaRepository<Magasine, String> {
 
     List<Magasine> getByDisponibleTrue();
-    List<Magasine> getByDisponibleFalse();
 
 }

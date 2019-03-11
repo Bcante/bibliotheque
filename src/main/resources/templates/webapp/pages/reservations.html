@@ -50,7 +50,16 @@
                     </div>
 
                     <div id="newreservation-danger" class="alert alert-danger alert-dismissible fade show hide-alert" role="alert">
-                        Réservation impossible.
+                        <h6 class="alert-heading">Réservation impossible</h6>
+                        <div>Cela peut être dû à :
+                            <ul>
+                                <li>Une ressource non trouvée (oeuvre ou usager)</li>
+                                <li>L'usager n'est pas actif</li>
+                                <li>Une réservation similaire existe déjà</li>
+                                <li>Un exemplaire de cet oeuvre est disponble. Vous ne pouvez pas réserver une oeuvre disponible.</li>
+                                <li>Une erreur informatique. Si l'erreur persiste, veuillez contacter le service à l'adresse : support@erp-biblio.com</li>
+                            </ul>
+                        </div>
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -101,7 +110,14 @@
                     </div>
 
                     <div id="annulerreservation-danger" class="alert alert-danger alert-dismissible fade show hide-alert" role="alert">
-                        Annulation impossible.
+                        <h6 class="alert-heading">Annulation impossible</h6>
+                        <div>Cela peut être dû à :
+                            <ul>
+                                <li>Une ressource non trouvée (oeuvre ou usager)</li>
+                                <li>Aucune réservation correspondante trouvée</li>
+                                <li>Une erreur informatique. Si l'erreur persiste, veuillez contacter le service à l'adresse : support@erp-biblio.com</li>
+                            </ul>
+                        </div>
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>

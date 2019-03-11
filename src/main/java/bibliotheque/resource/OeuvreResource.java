@@ -10,7 +10,7 @@ import java.util.List;
 @RepositoryRestResource(collectionResourceRel = "oeuvre")
 public interface OeuvreResource extends JpaRepository<Oeuvre, String> {
 
-    Oeuvre findByTitre(@RequestParam String titre);
+    Oeuvre getOeuvresByTitre(@RequestParam String titre);
 
     List<Oeuvre> getOeuvresByDisponibleTrue();
 

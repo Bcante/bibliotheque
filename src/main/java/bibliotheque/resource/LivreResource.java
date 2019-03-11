@@ -10,6 +10,5 @@ import java.util.List;
 public interface LivreResource extends JpaRepository<Livre, String> {
 
     List<Livre> getByDisponibleTrue();
-    List<Livre> getByDisponibleFalse();
 
 }

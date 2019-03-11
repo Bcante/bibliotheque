@@ -27,13 +27,6 @@ public class AuteurController {
         return modelAndView;
     }
 
-    @GetMapping(params = {"nom", "prenom"})
-    public ResponseEntity<?> getAuteurByNomAndPrenom(@RequestParam("nom") String nom,
-                                                        @RequestParam("prenom") String prenom) {
-        Auteur auteur = this.auteurResource.getAuteurByNomAndPrenom(nom, prenom);
-        return new ResponseEntity<>(auteur, HttpStatus.OK);
-    }
-
     /*
         "nom":"XXXX",
         "prenom":"YYYY"

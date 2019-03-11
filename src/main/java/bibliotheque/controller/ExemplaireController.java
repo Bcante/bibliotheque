@@ -32,38 +32,13 @@ public class ExemplaireController {
     }
 
     @GetMapping(value = "/")
-    public ResponseEntity<?> getAllExemplaires() {
-        List<Exemplaire> exemplaires = exemplaireResource.findAll();
-        return new ResponseEntity<>(exemplaires, HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/nondetruits")
-    public ModelAndView getAllExemplairesNonDetruit() {
+    public ModelAndView findAll() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("exemplaires", exemplaireResource.getExemplairesByEtatNot(Etat.DETRUIT));
         modelAndView.addObject("oeuvres", oeuvreResource.getOeuvresByDisponibleTrue());
         modelAndView.addObject("etats", Etat.values());
         modelAndView.setViewName("webapp/pages/exemplaires");
         return modelAndView;
-    }
-
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<?> getOneExemplaire(@PathVariable("id") String idexemplaire) {
-        Optional<Exemplaire> exemplaire = exemplaireResource.findById(idexemplaire);
-        if(!exemplaire.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(exemplaire.get(), HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/{idoeuvre}/disponibles")
-    public ResponseEntity<?> getExemplairesDisponibles(@PathVariable("idoeuvre") String idoeuvre) {
-        Optional<Oeuvre> oeuvre = oeuvreResource.findById(idoeuvre);
-        if(!oeuvre.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        List<Exemplaire> exemplaires = exemplaireResource.getExemplairesByDisponibleTrueAndOeuvreAndEtatNot(oeuvre.get(), Etat.DETRUIT);
-        return new ResponseEntity<>(exemplaires, HttpStatus.OK);
     }
 
     /*

@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -21,26 +20,13 @@ public class UsagerController {
     }
 
     @GetMapping(value = "/")
-    public ResponseEntity<?> getAll() {
-        List<Usager> usagers = usagerResource.findAll();
-        return new ResponseEntity<>(usagers, HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/actifs")
-    public ModelAndView getAllActifs() {
+    public ModelAndView findAll() {
         ModelAndView modelAndView = new ModelAndView();
 
         modelAndView.addObject("usagers", usagerResource.getUsagersByActifTrue());
         modelAndView.setViewName("webapp/pages/usagers");
 
         return modelAndView;
-
-    }
-
-    @GetMapping(value = "/nonactifs")
-    public ResponseEntity<?> getAllNonactifs() {
-        List<Usager> usagers = usagerResource.getUsagersByActifFalse();
-        return new ResponseEntity<>(usagers, HttpStatus.OK);
     }
 
     /*

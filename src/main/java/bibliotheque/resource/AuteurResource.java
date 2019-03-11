@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface AuteurResource extends JpaRepository<Auteur, String> {
 
     Auteur getAuteurByNomAndPrenom(@RequestParam String nom,
-                                   @RequestParam String prrenom);
+                                   @RequestParam String prenom);
 
 }

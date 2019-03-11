@@ -32,30 +32,15 @@ public class OeuvreController {
     }
 
     @GetMapping(value = "/")
-    public ResponseEntity<?> findAllOeuvres() {
-        return new ResponseEntity<>(this.oeuvreResource.findAll(), HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/disponibles")
-    public ModelAndView findOeuvreDisponible() {
+    public ModelAndView findAllOeuvres() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("oeuvres", this.oeuvreResource.getOeuvresByDisponibleTrue());
         modelAndView.setViewName("webapp/pages/oeuvres");
         return modelAndView;
     }
 
-    @GetMapping(value = "/nondisponibles")
-    public ResponseEntity<?> findOeuvreNonDisponible() {
-        return new ResponseEntity<>(this.oeuvreResource.getOeuvresByDisponibleFalse(), HttpStatus.OK);
-    }
-
     @GetMapping(value = "/livres")
-    public ResponseEntity<?> findAllLivres() {
-        return new ResponseEntity<>(this.livreResource.findAll(), HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/livres/disponibles")
-    public ModelAndView findLivresDisponibles() {
+    public ModelAndView findAllLivres() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("livres", this.livreResource.getByDisponibleTrue());
         modelAndView.addObject("auteurs", this.auteurResource.findAll());
@@ -63,37 +48,13 @@ public class OeuvreController {
         return modelAndView;
     }
 
-    @GetMapping(value = "/livres/nondisponibles")
-    public ResponseEntity<?> findLivresNonDisponibles() {
-        return new ResponseEntity<>(livreResource.getByDisponibleFalse(), HttpStatus.OK);
-    }
-
     @GetMapping(value = "/magasines")
-    public ResponseEntity<?> findAllMagasines() {
-        return new ResponseEntity<>(this.magasineResource.findAll(), HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/magasines/disponibles")
-    public ModelAndView findMagasinesDisponibles() {
+    public ModelAndView findAllMagasines() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("magasines", this.magasineResource.getByDisponibleTrue());
         modelAndView.addObject("types", Type.values());
         modelAndView.setViewName("webapp/pages/magasines");
         return modelAndView;
-    }
-
-    @GetMapping(value = "/magasines/nondisponibles")
-    public ResponseEntity<?> findMagasinesNonDisponibles() {
-        return new ResponseEntity<>(magasineResource.getByDisponibleFalse(), HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<?> findOeuvreById(@PathVariable("id") String idoeuvre) {
-        Optional<Oeuvre> oeuvre = this.oeuvreResource.findById(idoeuvre);
-        if(!oeuvre.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(this.oeuvreResource.getOeuvresByDisponibleTrue(), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}")

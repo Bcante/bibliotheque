@@ -81,10 +81,70 @@
                                 <!--/*@thymesVar id="auteur" type="bibliotheque.model.Auteur"*/-->
                                 <td th:text="${auteur.getPrenom()}"></td>
                                 <td th:text="${auteur.getNom()}"></td>
+                                <td>
+                                    <button class="btn btn-link modifier-auteur-btn" type="button" th:data-idauteur="${auteur.getIdauteur()}" data-toggle="modal" data-target="#modalAuteur">
+                                        Modifier
+                                    </button>
+                                </td>
                             </tr>
                         </th:block>
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalAuteur" tabindex="-1" role="dialog" aria-labelledby="modalUpdateAuteur" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalUpdateAuteur">Modification d'un auteur</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form onsubmit="updateAuteur()">
+                    <div class="form-group">
+                        <label for="idAuteurUpdate">Identifiant</label>
+                        <input type="text" class="form-control" id="idAuteurUpdate" disabled>
+                    </div>
+                    <div class="form-row">
+                        <div class="col form-group">
+                            <label for="prenomAuteurUpdate">Prenom*</label>
+                            <input type="text" class="form-control" id="prenomAuteurUpdate" required>
+                        </div>
+                        <div class="col form-group">
+                            <label for="nomAuteurUpdate">Nom*</label>
+                            <input type="text" class="form-control" id="nomAuteurUpdate" required>
+                        </div>
+                    </div>
+                    <p><small>Les champs accompagnés d'un * sont obligatoires.</small></p>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    </div>
+                </form>
+
+                <div id="updateauteur-success" class="alert alert-success alert-dismissible fade show hide-alert" role="alert">
+                    Mise à jour effectuée avec succès
+                    <button type="button" class="close close-success" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div id="updateauteur-danger" class="alert alert-danger alert-dismissible fade show hide-alert" role="alert">
+                    <h6 class="alert-heading">Mise à jour impossible</h6>
+                    <div>Cela peut être dû à :
+                        <ul>
+                            <li>Une erreur informatique. Si l'erreur persiste, veuillez contacter le service à l'adresse : support@erp-biblio.com</li>
+                        </ul>
+                    </div>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
             </div>
         </div>

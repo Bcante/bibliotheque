@@ -121,6 +121,15 @@ function newMagasine() {
     showAndHideAlerts(response, '#magasine-success', '#magasine-danger');
 }
 
+function updateAuteur() {
+    let data = {
+        "nom": $("#nomAuteurUpdate").val(),
+        "prenom": $("#prenomAuteurUpdate").val()
+    };
+    let response = envoyerRequete('/auteurs/' + $("#idAuteurUpdate").val(), data, 'PUT');
+    showAndHideAlerts(response, '#updateauteur-success', '#updateauteur-danger');
+}
+
 $(document).ready(function(){
     $('form').submit(function(e) {
         e.preventDefault();
@@ -133,5 +142,16 @@ $(document).ready(function(){
 
     $('.close-success').click(function() {
        location.reload(true);
+    });
+
+    $('.modifier-auteur-btn').click(function () {
+        $.ajax({
+            url: '/auteurs/' + this.getAttribute('data-idauteur'),
+            type : 'GET',
+        }).done(function (response) {
+            $('#idAuteurUpdate').val(response.idauteur);
+            $('#prenomAuteurUpdate').val(response.prenom);
+            $('#nomAuteurUpdate').val(response.nom);
+        });
     });
 });

@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,14 +38,15 @@ public class ExemplaireController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("exemplaires", exemplaireResource.getExemplairesByEtatNot(Etat.DETRUIT));
         modelAndView.addObject("oeuvres", oeuvreResource.getOeuvresByDisponibleTrue());
-        modelAndView.addObject("etats", Etat.values());
+        Etat[] etats = Arrays.copyOf(Etat.values(), Etat.values().length - 1);
+        modelAndView.addObject("etats", etats);
         modelAndView.setViewName("webapp/pages/exemplaires");
         return modelAndView;
     }
 
     /*
     {
-        "titre" : "XXXX",
+        "idoeuvre" : "XXXX",
         "etat" : "YYYY"
     }
      */

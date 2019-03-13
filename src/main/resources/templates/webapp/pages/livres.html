@@ -94,9 +94,9 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <!--/*@thymesVar id="livre" type="bibliotheque.model.Livre"*/-->
                         <th:block th:each="livre : ${livres}">
                             <tr>
-                                <!--/*@thymesVar id="oeuvre" type="bibliotheque.model.Oeuvre"*/-->
                                 <td th:text="${livre.getTitre()}"></td>
                                 <td th:text="${livre.getISBN()}"></td>
                                 <td th:text="${livre.getParution()}"></td>

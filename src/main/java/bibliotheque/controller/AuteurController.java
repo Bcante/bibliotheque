@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/auteurs")
 public class AuteurController {
@@ -27,6 +29,12 @@ public class AuteurController {
         return modelAndView;
     }
 
+    @GetMapping(value = "/{id}")
+    public Auteur findById(@PathVariable("id") String id) {
+        Optional<Auteur> auteur = auteurResource.findById(id);
+        return auteur.get();
+    }
+
     /*
         "nom":"XXXX",
         "prenom":"YYYY"
@@ -35,6 +43,14 @@ public class AuteurController {
     public ResponseEntity<?> newAuteur(@RequestBody Auteur auteur) {
         auteurResource.save(auteur);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<?> updateAuteur(@RequestBody Auteur auteur,
+                                          @PathVariable("id") String id) {
+        auteur.setIdauteur(id);
+        auteurResource.save(auteur);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }
